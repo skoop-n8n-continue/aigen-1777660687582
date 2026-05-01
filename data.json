@@ -1,0 +1,642 @@
+{
+  "app_id": "realeaf-001",
+  "document_version": 1,
+  "sections": {
+    "app_settings": {
+      "bg": {
+        "type": "color",
+        "label": "Background (Base)",
+        "value": "#080808"
+      },
+      "bg2": {
+        "type": "color",
+        "label": "Background (Modals)",
+        "value": "#101010"
+      },
+      "bg3": {
+        "type": "color",
+        "label": "Background (Cards)",
+        "value": "#161616"
+      },
+      "bg4": {
+        "type": "color",
+        "label": "Background (Hover)",
+        "value": "#1e1e1e"
+      },
+      "border": {
+        "type": "color",
+        "label": "Border 1",
+        "value": "#232323"
+      },
+      "border2": {
+        "type": "color",
+        "label": "Border 2",
+        "value": "#2e2e2e"
+      },
+      "text": {
+        "type": "color",
+        "label": "Text (Primary)",
+        "value": "#ffffff"
+      },
+      "text2": {
+        "type": "color",
+        "label": "Text (Secondary)",
+        "value": "#999999"
+      },
+      "text3": {
+        "type": "color",
+        "label": "Text (Tertiary)",
+        "value": "#555555"
+      },
+      "green": {
+        "type": "color",
+        "label": "Green (Brand)",
+        "value": "#3d7a45"
+      },
+      "green2": {
+        "type": "color",
+        "label": "Green 2 (Accent)",
+        "value": "#4caf50"
+      }
+    },
+    "storefront": {
+      "company_name": {
+        "type": "text",
+        "label": "Company Name",
+        "value": "Realeaf Botanicals"
+      },
+      "hero_title": {
+        "type": "text",
+        "label": "Hero Title",
+        "value": "Our Brands"
+      },
+      "hero_desc": {
+        "type": "textarea",
+        "label": "Hero Description",
+        "value": "Masterfully crafted cannabis products created to elevate your experience and exhilarate your life."
+      },
+      "company_logo_white": {
+        "type": "file",
+        "label": "Company Logo (White)",
+        "value": "assets/company_logo_white_vqnzi9.png",
+        "meta": {
+          "accepted_formats": [
+            "png",
+            "jpg",
+            "svg"
+          ],
+          "path": "assets/"
+        }
+      }
+    },
+    "brands": {
+      "type": "collection",
+      "label": "Brands",
+      "item_schema": {
+        "id": {
+          "type": "text",
+          "label": "ID"
+        },
+        "name": {
+          "type": "text",
+          "label": "Brand Name"
+        },
+        "tagline": {
+          "type": "text",
+          "label": "Tagline"
+        },
+        "desc": {
+          "type": "textarea",
+          "label": "Description"
+        },
+        "color": {
+          "type": "color",
+          "label": "Brand Color"
+        },
+        "logoW": {
+          "type": "file",
+          "label": "Brand Logo",
+          "meta": {
+            "accepted_formats": [
+              "png",
+              "svg"
+            ],
+            "path": "assets/brands/"
+          }
+        },
+        "hero": {
+          "type": "file",
+          "label": "Hero Background",
+          "meta": {
+            "accepted_formats": [
+              "png",
+              "jpg",
+              "webp"
+            ],
+            "path": "assets/brands/"
+          }
+        }
+      },
+      "value": [
+        {
+          "id": "brand_1kx5ge",
+          "name": "Skyy",
+          "tagline": "Dual Tanks. Skyy Smooth. Flavor Fusion On Demand.",
+          "desc": "Experience the perfect blend of craft cannabis and innovation with Skyy, elevating your vibe to new heights. Our dual-tank pod device delivers unmatched flavor fusion for the discerning enthusiast.",
+          "color": "#00d4ff",
+          "logoW": "assets/brands/brand_1kx5ge_logow_23w9jt.png",
+          "hero": "assets/brands/brand_1kx5ge_hero_qq6dhr.png"
+        },
+        {
+          "id": "brand_42c92z",
+          "name": "Fyre",
+          "tagline": "Pocket-Sized. Party-Ready. Fuel The Fyre.",
+          "desc": "Enjoy Fyre Pre-Rolled Cannabis for a smooth, fire experience that ignites your senses and sets the vibe ablaze. Crafted in small batches for maximum potency and consistent burn.",
+          "color": "#ff8c00",
+          "logoW": "assets/brands/brand_42c92z_logow_tjyudo.png",
+          "hero": "assets/brands/brand_42c92z_hero_s7kgoo.png"
+        },
+        {
+          "id": "brand_16e3jv",
+          "name": "Rayne",
+          "tagline": "Rain Or Shine. These Drops Hit Every Time.",
+          "desc": "Unwind with Rayne Drops — our infused gummies with juicy fruit flavors that provide a perfectly mellow experience. Each drop is precisely dosed for consistent, delightful effects you can count on.",
+          "color": "#a064f8",
+          "logoW": "assets/brands/brand_16e3jv_logow_k2k8n5.png",
+          "hero": "assets/brands/brand_16e3jv_hero_p4t7dk.png"
+        },
+        {
+          "id": "brand_rrxxsh",
+          "name": "Foryst",
+          "tagline": "Craft Cannabis. Small Batch. Exceptional Quality.",
+          "desc": "Foryst delivers premium craft cannabis flower in small, carefully curated batches. Each strain is hand-selected for its unique terpene profile, potency, and overall smoking experience.",
+          "color": "#e85d1e",
+          "logoW": "assets/brands/brand_rrxxsh_logow_f1difr.png",
+          "hero": "assets/brands/brand_rrxxsh_hero_i4gwos.png"
+        }
+      ]
+    },
+    "products": {
+      "type": "collection",
+      "label": "Products",
+      "item_schema": {
+        "id": {
+          "type": "text",
+          "label": "ID"
+        },
+        "name": {
+          "type": "text",
+          "label": "Product Name"
+        },
+        "sub": {
+          "type": "text",
+          "label": "Sub Headline"
+        },
+        "desc": {
+          "type": "textarea",
+          "label": "Description"
+        },
+        "tags": {
+          "type": "text",
+          "label": "Tags (Comma Separated)"
+        },
+        "brand": {
+          "type": "linked",
+          "label": "Brand",
+          "meta": {
+            "collection": "brands",
+            "display_field": "name"
+          }
+        },
+        "image": {
+          "type": "file",
+          "label": "Product Image",
+          "meta": {
+            "accepted_formats": [
+              "png",
+              "jpg",
+              "webp"
+            ],
+            "path": "assets/products/"
+          }
+        },
+        "grad": {
+          "type": "text",
+          "label": "Fallback Gradient (CSS)"
+        },
+        "detail_1_label": {
+          "type": "text",
+          "label": "Detail 1 Label"
+        },
+        "detail_1_value": {
+          "type": "text",
+          "label": "Detail 1 Value"
+        },
+        "detail_2_label": {
+          "type": "text",
+          "label": "Detail 2 Label"
+        },
+        "detail_2_value": {
+          "type": "text",
+          "label": "Detail 2 Value"
+        },
+        "detail_3_label": {
+          "type": "text",
+          "label": "Detail 3 Label"
+        },
+        "detail_3_value": {
+          "type": "text",
+          "label": "Detail 3 Value"
+        },
+        "detail_4_label": {
+          "type": "text",
+          "label": "Detail 4 Label"
+        },
+        "detail_4_value": {
+          "type": "text",
+          "label": "Detail 4 Value"
+        }
+      },
+      "value": [
+        {
+          "id": "prod_12mc7c",
+          "name": "Dual Tank Pod Device",
+          "sub": "By Realeaf Botanicals",
+          "desc": "The Skyy Dual Tank Pod Device is engineered for the ultimate flavor fusion experience. Switch between two strains on demand with our patented dual-tank technology. Sleek, pocket-sized, and built for the modern cannabis enthusiast.",
+          "tags": "Device, Dual-Tank, Vape, Rechargeable",
+          "brand": "brand_1kx5ge",
+          "image": "https://loremflickr.com/400/300/vape?random=1",
+          "grad": "linear-gradient(135deg,#001520 0%,#003a5c 60%,#001520 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Vape Device",
+          "detail_2_label": "Capacity",
+          "detail_2_value": "2 × 0.5g",
+          "detail_3_label": "Battery",
+          "detail_3_value": "350mAh",
+          "detail_4_label": "Charge",
+          "detail_4_value": "USB-C"
+        },
+        {
+          "id": "prod_te5vy4",
+          "name": "Skyy Pod — Blue Dream + Wedding Cake",
+          "sub": "Hybrid Blend · 1g Total",
+          "desc": "A harmonious blend of Blue Dream's energizing clarity and Wedding Cake's relaxing euphoria. Two perfectly matched strains in one pod, ready to switch on your command.",
+          "tags": "Pod, Hybrid, 1g, Vape",
+          "brand": "brand_1kx5ge",
+          "image": "https://loremflickr.com/400/300/vape?random=2",
+          "grad": "linear-gradient(135deg,#001833 0%,#004488 60%,#001833 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Pod Cartridge",
+          "detail_2_label": "Weight",
+          "detail_2_value": "1g",
+          "detail_3_label": "THC",
+          "detail_3_value": "82%",
+          "detail_4_label": "Blend",
+          "detail_4_value": "Hybrid"
+        },
+        {
+          "id": "prod_y2xx9w",
+          "name": "Skyy Pod — Strawberry Cough + Lemon Haze",
+          "sub": "Sativa Blend · 1g Total",
+          "desc": "Wake up your senses with the bright, fruity fusion of Strawberry Cough and Lemon Haze. This sativa-forward blend delivers uplifting energy and crisp citrus notes that keep you going.",
+          "tags": "Pod, Sativa, 1g, Vape",
+          "brand": "brand_1kx5ge",
+          "image": "https://loremflickr.com/400/300/vape?random=3",
+          "grad": "linear-gradient(135deg,#0d0025 0%,#2a0070 60%,#0d0025 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Pod Cartridge",
+          "detail_2_label": "Weight",
+          "detail_2_value": "1g",
+          "detail_3_label": "THC",
+          "detail_3_value": "79%",
+          "detail_4_label": "Blend",
+          "detail_4_value": "Sativa"
+        },
+        {
+          "id": "prod_ij1xgx",
+          "name": "Skyy Pod — Sunset Sherbet + Gelato",
+          "sub": "Indica Blend · 1g Total",
+          "desc": "Unwind with the creamy, dessert-inspired fusion of Sunset Sherbet and Gelato. A luxurious indica blend that melts away the day and delivers waves of relaxed euphoria.",
+          "tags": "Pod, Indica, 1g, Vape",
+          "brand": "brand_1kx5ge",
+          "image": "https://loremflickr.com/400/300/vape?random=4",
+          "grad": "linear-gradient(135deg,#001028 0%,#003066 60%,#001028 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Pod Cartridge",
+          "detail_2_label": "Weight",
+          "detail_2_value": "1g",
+          "detail_3_label": "THC",
+          "detail_3_value": "85%",
+          "detail_4_label": "Blend",
+          "detail_4_value": "Indica"
+        },
+        {
+          "id": "prod_br4dbg",
+          "name": "Skyy Starter Kit",
+          "sub": "Device + Pod Bundle",
+          "desc": "Everything you need to experience Skyy. Includes the Dual Tank Pod Device, one pod of your choice, and a USB-C charging cable. The perfect entry point into the Skyy experience.",
+          "tags": "Bundle, Starter, Device, Pod",
+          "brand": "brand_1kx5ge",
+          "image": "https://loremflickr.com/400/300/vape?random=5",
+          "grad": "linear-gradient(135deg,#001018 0%,#002845 60%,#001018 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Bundle",
+          "detail_2_label": "Includes",
+          "detail_2_value": "Device + Pod + Cable",
+          "detail_3_label": "Battery",
+          "detail_3_value": "350mAh",
+          "detail_4_label": "Charge",
+          "detail_4_value": "USB-C"
+        },
+        {
+          "id": "prod_3tfaso",
+          "name": "Fyre Minis — Original Blend",
+          "sub": "8-Pack Pre-Rolls · 0.5g Each",
+          "desc": "The classic Fyre experience. Eight perfectly rolled mini pre-rolls packed with our signature blend. Smooth draw, consistent burn, and the signature Fyre kick every time.",
+          "tags": "Pre-Roll, Minis, 8-Pack, Hybrid",
+          "brand": "brand_42c92z",
+          "image": "https://loremflickr.com/400/300/smoke?random=6",
+          "grad": "linear-gradient(135deg,#1a0500 0%,#4a1500 60%,#1a0500 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Pre-Roll",
+          "detail_2_label": "Count",
+          "detail_2_value": "8 Pack",
+          "detail_3_label": "Weight",
+          "detail_3_value": "0.5g each",
+          "detail_4_label": "Blend",
+          "detail_4_value": "Hybrid"
+        },
+        {
+          "id": "prod_d2ijhu",
+          "name": "Fyre Minis — Sativa Blend",
+          "sub": "8-Pack Pre-Rolls · 0.5g Each",
+          "desc": "Light up and level up. Our sativa-dominant mini pre-rolls deliver energizing, cerebral effects perfect for social situations and creative endeavors. Pure fire, every puff.",
+          "tags": "Pre-Roll, Minis, 8-Pack, Sativa",
+          "brand": "brand_42c92z",
+          "image": "https://loremflickr.com/400/300/smoke?random=7",
+          "grad": "linear-gradient(135deg,#100a00 0%,#302000 60%,#100a00 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Pre-Roll",
+          "detail_2_label": "Count",
+          "detail_2_value": "8 Pack",
+          "detail_3_label": "Weight",
+          "detail_3_value": "0.5g each",
+          "detail_4_label": "Blend",
+          "detail_4_value": "Sativa"
+        },
+        {
+          "id": "prod_oaaxv3",
+          "name": "Fyre Minis — Indica Blend",
+          "sub": "8-Pack Pre-Rolls · 0.5g Each",
+          "desc": "Wind down with our indica-dominant mini pre-rolls. Deeply relaxing, full-bodied effects that calm the mind and soothe the body. The perfect end to any day.",
+          "tags": "Pre-Roll, Minis, 8-Pack, Indica",
+          "brand": "brand_42c92z",
+          "image": "https://loremflickr.com/400/300/smoke?random=8",
+          "grad": "linear-gradient(135deg,#180600 0%,#401000 60%,#180600 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Pre-Roll",
+          "detail_2_label": "Count",
+          "detail_2_value": "8 Pack",
+          "detail_3_label": "Weight",
+          "detail_3_value": "0.5g each",
+          "detail_4_label": "Blend",
+          "detail_4_value": "Indica"
+        },
+        {
+          "id": "prod_kmcf4h",
+          "name": "Fyre King Size Pre-Roll",
+          "sub": "Single · 1.5g Premium",
+          "desc": "When minis aren't enough, go king size. Our flagship 1.5g pre-roll is hand-rolled with premium craft flower for a luxurious, extended smoking experience from start to finish.",
+          "tags": "Pre-Roll, King-Size, Single, Premium",
+          "brand": "brand_42c92z",
+          "image": "https://loremflickr.com/400/300/smoke?random=9",
+          "grad": "linear-gradient(135deg,#200800 0%,#552000 60%,#200800 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Pre-Roll",
+          "detail_2_label": "Size",
+          "detail_2_value": "King Size",
+          "detail_3_label": "Weight",
+          "detail_3_value": "1.5g",
+          "detail_4_label": "Rolling",
+          "detail_4_value": "Hand-Rolled"
+        },
+        {
+          "id": "prod_ks1051",
+          "name": "Fyre Infused Minis",
+          "sub": "4-Pack Pre-Rolls · Kief-Coated",
+          "desc": "Elevated beyond the ordinary. Our infused mini pre-rolls are coated in premium kief for enhanced potency and a slow, silky burn. For those who demand more from every session.",
+          "tags": "Pre-Roll, Infused, Kief, 4-Pack",
+          "brand": "brand_42c92z",
+          "image": "https://loremflickr.com/400/300/smoke?random=10",
+          "grad": "linear-gradient(135deg,#250000 0%,#600808 60%,#250000 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Infused Pre-Roll",
+          "detail_2_label": "Count",
+          "detail_2_value": "4 Pack",
+          "detail_3_label": "Weight",
+          "detail_3_value": "0.75g each",
+          "detail_4_label": "Coating",
+          "detail_4_value": "Premium Kief"
+        },
+        {
+          "id": "prod_79o5fv",
+          "name": "Sour Power Drops — Variety Pack",
+          "sub": "10-Pack Gummies · 10mg THC Each",
+          "desc": "The ultimate variety experience. Our Sour Power Drops Variety Pack features an assortment of tangy, fruit-forward gummies that hit exactly where you want them, every single time. 100mg total.",
+          "tags": "Edible, Gummy, 10mg, 10-Pack, Variety",
+          "brand": "brand_16e3jv",
+          "image": "https://loremflickr.com/400/300/candy?random=11",
+          "grad": "linear-gradient(135deg,#0a0018 0%,#28006a 60%,#0a0018 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Infused Gummy",
+          "detail_2_label": "Count",
+          "detail_2_value": "10 Pack",
+          "detail_3_label": "Dose",
+          "detail_3_value": "10mg THC each",
+          "detail_4_label": "Total",
+          "detail_4_value": "100mg THC"
+        },
+        {
+          "id": "prod_a7vvwx",
+          "name": "Rayne Drops — Strawberry",
+          "sub": "10-Pack Gummies · 10mg THC Each",
+          "desc": "Sweet, ripe strawberry flavor infused with precisely 10mg of THC per drop. Juicy, consistent, and absolutely delicious. Rain or shine, Rayne Drops in Strawberry hit right.",
+          "tags": "Edible, Gummy, 10mg, 10-Pack, Strawberry",
+          "brand": "brand_16e3jv",
+          "image": "https://loremflickr.com/400/300/candy?random=12",
+          "grad": "linear-gradient(135deg,#200018 0%,#500040 60%,#200018 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Infused Gummy",
+          "detail_2_label": "Count",
+          "detail_2_value": "10 Pack",
+          "detail_3_label": "Dose",
+          "detail_3_value": "10mg THC each",
+          "detail_4_label": "Flavor",
+          "detail_4_value": "Strawberry"
+        },
+        {
+          "id": "prod_f4wdci",
+          "name": "Rayne Drops — Watermelon",
+          "sub": "10-Pack Gummies · 10mg THC Each",
+          "desc": "Crisp, refreshing watermelon bursting with flavor in every chew. Our Watermelon Rayne Drops deliver the same precise dosing and reliable effects in a summery, beloved flavor.",
+          "tags": "Edible, Gummy, 10mg, 10-Pack, Watermelon",
+          "brand": "brand_16e3jv",
+          "image": "https://loremflickr.com/400/300/candy?random=13",
+          "grad": "linear-gradient(135deg,#001a10 0%,#004020 60%,#001a10 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Infused Gummy",
+          "detail_2_label": "Count",
+          "detail_2_value": "10 Pack",
+          "detail_3_label": "Dose",
+          "detail_3_value": "10mg THC each",
+          "detail_4_label": "Flavor",
+          "detail_4_value": "Watermelon"
+        },
+        {
+          "id": "prod_82i77v",
+          "name": "Rayne Drops — Blue Raspberry",
+          "sub": "10-Pack Gummies · 10mg THC Each",
+          "desc": "Bold, tangy blue raspberry with a satisfying sour kick. These drops pack the perfect punch of flavor and 10mg THC per drop — for those who like their Rayne with a little zing.",
+          "tags": "Edible, Gummy, 10mg, 10-Pack, Blue Raspberry",
+          "brand": "brand_16e3jv",
+          "image": "https://loremflickr.com/400/300/candy?random=14",
+          "grad": "linear-gradient(135deg,#000a28 0%,#001668 60%,#000a28 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Infused Gummy",
+          "detail_2_label": "Count",
+          "detail_2_value": "10 Pack",
+          "detail_3_label": "Dose",
+          "detail_3_value": "10mg THC each",
+          "detail_4_label": "Flavor",
+          "detail_4_value": "Blue Raspberry"
+        },
+        {
+          "id": "prod_eh3ix1",
+          "name": "Rayne 2:1 CBD:THC Drops",
+          "sub": "10-Pack Gummies · Balanced Blend",
+          "desc": "A perfectly balanced blend for those seeking a milder, wellness-focused experience. Our 2:1 CBD:THC drops offer gentle relief and relaxation without overwhelming psychoactive effects.",
+          "tags": "Edible, Gummy, CBD, 5mg THC, Wellness",
+          "brand": "brand_16e3jv",
+          "image": "https://loremflickr.com/400/300/candy?random=15",
+          "grad": "linear-gradient(135deg,#051520 0%,#103040 60%,#051520 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Infused Gummy",
+          "detail_2_label": "Count",
+          "detail_2_value": "10 Pack",
+          "detail_3_label": "THC",
+          "detail_3_value": "5mg each",
+          "detail_4_label": "CBD",
+          "detail_4_value": "10mg each"
+        },
+        {
+          "id": "prod_u7qpby",
+          "name": "Cara Cara",
+          "sub": "Indica · 3.5g Craft Flower",
+          "desc": "A deeply relaxing indica with sweet citrus notes and hints of berry. Cara Cara's dense, resinous buds deliver a powerful body effect paired with a pleasantly euphoric mental state. A true craft classic.",
+          "tags": "Flower, Indica, 3.5g, Craft, Relaxing",
+          "brand": "brand_rrxxsh",
+          "image": "https://loremflickr.com/400/300/leaf?random=16",
+          "grad": "linear-gradient(135deg,#1a0500 0%,#4a1200 60%,#1a0500 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Flower",
+          "detail_2_label": "Weight",
+          "detail_2_value": "3.5g",
+          "detail_3_label": "Blend",
+          "detail_3_value": "Indica",
+          "detail_4_label": "THC",
+          "detail_4_value": "24–27%"
+        },
+        {
+          "id": "prod_gbt42f",
+          "name": "Hella Jelly",
+          "sub": "Hybrid · 3.5g Craft Flower",
+          "desc": "Sweet, fruity, and undeniably dank. Hella Jelly is a balanced hybrid with a complex terpene profile featuring notes of grape, berry, and tropical fruit. Smooth smoke, well-rounded effects.",
+          "tags": "Flower, Hybrid, 3.5g, Craft, Fruity",
+          "brand": "brand_rrxxsh",
+          "image": "https://loremflickr.com/400/300/leaf?random=17",
+          "grad": "linear-gradient(135deg,#150a20 0%,#381a44 60%,#150a20 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Flower",
+          "detail_2_label": "Weight",
+          "detail_2_value": "3.5g",
+          "detail_3_label": "Blend",
+          "detail_3_value": "Hybrid",
+          "detail_4_label": "THC",
+          "detail_4_value": "26–29%"
+        },
+        {
+          "id": "prod_3ogquq",
+          "name": "Jelly Donutz",
+          "sub": "Indica · 3.5g Craft Flower",
+          "desc": "Sweet, doughy, and delightfully relaxing. Jelly Donutz lives up to its name with dessert-forward terpenes and a deeply calming indica experience. Perfect for evening sessions.",
+          "tags": "Flower, Indica, 3.5g, Craft, Sweet",
+          "brand": "brand_rrxxsh",
+          "image": "https://loremflickr.com/400/300/leaf?random=18",
+          "grad": "linear-gradient(135deg,#1a0010 0%,#420025 60%,#1a0010 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Flower",
+          "detail_2_label": "Weight",
+          "detail_2_value": "3.5g",
+          "detail_3_label": "Blend",
+          "detail_3_value": "Indica",
+          "detail_4_label": "THC",
+          "detail_4_value": "25–28%"
+        },
+        {
+          "id": "prod_vukfbf",
+          "name": "Jungle Sunset",
+          "sub": "Sativa · 3.5g Craft Flower",
+          "desc": "A vibrant, energizing sativa bursting with tropical and citrus terpenes. Jungle Sunset delivers an uplifting, creative high perfect for daytime adventures and outdoor activities.",
+          "tags": "Flower, Sativa, 3.5g, Craft, Energizing",
+          "brand": "brand_rrxxsh",
+          "image": "https://loremflickr.com/400/300/leaf?random=19",
+          "grad": "linear-gradient(135deg,#1a0800 0%,#602000 60%,#1a0800 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Flower",
+          "detail_2_label": "Weight",
+          "detail_2_value": "3.5g",
+          "detail_3_label": "Blend",
+          "detail_3_value": "Sativa",
+          "detail_4_label": "THC",
+          "detail_4_value": "22–25%"
+        },
+        {
+          "id": "prod_bq0c92",
+          "name": "Humboldt Dreams",
+          "sub": "Hybrid · 3.5g Craft Flower",
+          "desc": "Inspired by California's legendary growing region, Humboldt Dreams is a premium hybrid with earthy pine, lemon, and spice notes. A well-balanced, long-lasting experience that soothes without sedating.",
+          "tags": "Flower, Hybrid, 3.5g, Craft, Premium",
+          "brand": "brand_rrxxsh",
+          "image": "https://loremflickr.com/400/300/leaf?random=20",
+          "grad": "linear-gradient(135deg,#081200 0%,#182e00 60%,#081200 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Flower",
+          "detail_2_label": "Weight",
+          "detail_2_value": "3.5g",
+          "detail_3_label": "Blend",
+          "detail_3_value": "Hybrid",
+          "detail_4_label": "THC",
+          "detail_4_value": "23–26%"
+        },
+        {
+          "id": "prod_gblsuy",
+          "name": "Boo Berry Cookies",
+          "sub": "Indica · 3.5g Craft Flower",
+          "desc": "A hauntingly good indica cross with notes of blueberry, vanilla, and earthy sweetness. Boo Berry Cookies delivers a creeping body high and dreamy, relaxed mental state. A fan favorite.",
+          "tags": "Flower, Indica, 3.5g, Craft, Berry",
+          "brand": "brand_rrxxsh",
+          "image": "https://loremflickr.com/400/300/leaf?random=21",
+          "grad": "linear-gradient(135deg,#060012 0%,#180035 60%,#060012 100%)",
+          "detail_1_label": "Type",
+          "detail_1_value": "Flower",
+          "detail_2_label": "Weight",
+          "detail_2_value": "3.5g",
+          "detail_3_label": "Blend",
+          "detail_3_value": "Indica",
+          "detail_4_label": "THC",
+          "detail_4_value": "27–30%"
+        }
+      ]
+    }
+  }
+}
