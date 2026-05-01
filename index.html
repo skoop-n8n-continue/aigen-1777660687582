@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="manifest" href="./manifest.json">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realeaf Botanicals — Brand Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --bg2: #101010;
+      --bg3: #161616;
+      --bg4: #1e1e1e;
+      --border: #232323;
+      --border2: #2e2e2e;
+      --text: #ffffff;
+      --text2: #999999;
+      --text3: #555555;
+      --green: #3d7a45;
+      --green2: #4caf50;
+
+      --skyy: #00d4ff;
+      --skyy-glow: rgba(0,212,255,0.12);
+      --fyre: #ff8c00;
+      --fyre-glow: rgba(255,140,0,0.12);
+      --rayne: #a064f8;
+      --rayne-glow: rgba(160,100,248,0.12);
+      --foryst: #e85d1e;
+      --foryst-glow: rgba(232,93,30,0.12);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    img { display: block; }
+
+    /* ─── HEADER ─── */
+    .hdr {
+      position: sticky; top: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 68px;
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hdr-logo { height: 36px; object-fit: contain; }
+
+    .hdr-right { display: flex; align-items: center; gap: 16px; }
+
+    .back-btn {
+      display: none; align-items: center; gap: 8px;
+      background: none; border: 1px solid var(--border2);
+      color: var(--text); font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+      padding: 8px 18px; border-radius: 6px; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .back-btn:hover { background: var(--bg3); border-color: #444; }
+    .back-btn.show { display: flex; }
+
+    .back-btn svg { flex-shrink: 0; }
+
+    /* ─── SCREENS ─── */
+    .screen { display: none; animation: fadeIn 0.3s ease; }
+    .screen.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════
+       BRANDS SCREEN
+    ═══════════════════════════════ */
+    .brands-wrap {
+      padding: 64px 48px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .brands-hero {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .brands-hero-eyebrow {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--green2);
+      margin-bottom: 14px;
+    }
+
+    .brands-hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .brands-hero p {
+      font-size: 16px; color: var(--text2);
+      line-height: 1.7; max-width: 520px; margin: 0 auto;
+    }
+
+    .brands-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 720px) { .brands-grid { grid-template-columns: 1fr; } }
+    @media (min-width: 1300px) { .brands-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .brand-card {
+      position: relative; overflow: hidden; border-radius: 14px;
+      aspect-ratio: 16/10; cursor: pointer;
+      border: 1px solid var(--border);
+      transition: transform 0.32s cubic-bezier(0.2,0,0.1,1),
+                  box-shadow 0.32s ease, border-color 0.32s ease;
+    }
+
+    .brand-card:hover { transform: translateY(-5px) scale(1.01); }
+
+    .brand-card[data-brand="skyy"]:hover  { box-shadow: 0 24px 60px var(--skyy-glow),  0 0 0 1px var(--skyy);  border-color: var(--skyy);  }
+    .brand-card[data-brand="fyre"]:hover  { box-shadow: 0 24px 60px var(--fyre-glow),  0 0 0 1px var(--fyre);  border-color: var(--fyre);  }
+    .brand-card[data-brand="rayne"]:hover { box-shadow: 0 24px 60px var(--rayne-glow), 0 0 0 1px var(--rayne); border-color: var(--rayne); }
+    .brand-card[data-brand="foryst"]:hover{ box-shadow: 0 24px 60px var(--foryst-glow),0 0 0 1px var(--foryst);border-color: var(--foryst);}
+
+    .brand-card-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform 0.5s cubic-bezier(0.2,0,0.1,1);
+    }
+    .brand-card:hover .brand-card-bg { transform: scale(1.06); }
+
+    .brand-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.92) 0%,
+        rgba(0,0,0,0.5) 50%,
+        rgba(0,0,0,0.15) 100%
+      );
+      display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 24px 22px 22px;
+    }
+
+    .brand-card-logo {
+      height: 38px; object-fit: contain; object-position: left;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+      transition: filter 0.2s;
+    }
+    .brand-card:hover .brand-card-logo { filter: drop-shadow(0 2px 12px rgba(255,255,255,0.2)); }
+
+    .brand-card-tagline {
+      font-size: 12px; color: rgba(255,255,255,0.65);
+      line-height: 1.5; margin-bottom: 14px;
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .brand-card-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Oswald', sans-serif; font-size: 12px;
+      font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 4px; width: fit-content;
+      border: 1px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.07);
+      color: white;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .brand-card:hover .brand-card-btn {
+      background: rgba(255,255,255,0.16);
+      border-color: rgba(255,255,255,0.55);
+    }
+
+    /* ═══════════════════════════════
+       BRAND DETAIL SCREEN
+    ═══════════════════════════════ */
+    .brand-hero {
+      position: relative; height: min(420px, 50vw);
+      overflow: hidden;
+    }
+
+    .brand-hero-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+    }
+
+    .brand-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(8,8,8,0.97) 0%,
+        rgba(8,8,8,0.78) 42%,
+        rgba(8,8,8,0.2) 75%,
+        transparent 100%
+      );
+      display: flex; align-items: center;
+      padding: 0 60px;
+    }
+
+    .brand-hero-content { max-width: 560px; }
+
+    .brand-hero-logo {
+      height: 64px; object-fit: contain; object-position: left;
+      margin-bottom: 22px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+    }
+
+    .brand-hero-tagline {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(17px, 2.2vw, 24px);
+      font-weight: 500; letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .brand-hero-desc {
+      font-size: 14px; color: rgba(255,255,255,0.62);
+      line-height: 1.75; max-width: 460px;
+    }
+
+    .brand-accent-bar { height: 3px; width: 100%; }
+
+    /* ─── Products Section ─── */
+    .products-section {
+      padding: 40px 48px 72px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .products-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 20px;
+      margin-bottom: 28px; flex-wrap: wrap;
+    }
+
+    .products-title-row { display: flex; align-items: baseline; gap: 10px; }
+
+    .products-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 26px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    .products-count {
+      font-size: 14px; color: var(--text3);
+      font-weight: 500;
+    }
+
+    .filter-wrap { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .filter-chip {
+      padding: 6px 14px; border-radius: 20px;
+      border: 1px solid var(--border2);
+      font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
+      color: var(--text2); cursor: pointer;
+      transition: all 0.18s; background: none;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+    .filter-chip:hover { color: var(--text); border-color: #555; }
+    .filter-chip.on { background: var(--chip-bg,rgba(255,255,255,0.08)); border-color: var(--chip-border,#555); color: var(--chip-text,white); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .prod-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden; cursor: pointer;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+    .prod-card:hover { transform: translateY(-4px); border-color: var(--border2); }
+    .prod-card.hidden { display: none; }
+
+    .prod-thumb {
+      width: 100%; aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+
+    .prod-thumb-logo {
+      height: 32px; opacity: 0.28; object-fit: contain;
+      position: relative; z-index: 1;
+      transition: opacity 0.2s;
+    }
+    .prod-card:hover .prod-thumb-logo { opacity: 0.45; }
+
+    .prod-body { padding: 14px 14px 16px; }
+
+    .prod-name {
+      font-family: 'Oswald', sans-serif; font-size: 15px;
+      font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.03em; line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .prod-sub { font-size: 11px; color: var(--text2); margin-bottom: 10px; }
+
+    .prod-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+
+    .ptag {
+      font-size: 10px; font-weight: 500;
+      padding: 3px 8px; border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.5);
+    }
+
+    .no-results {
+      grid-column: 1/-1;
+      text-align: center; padding: 60px 20px;
+      color: var(--text3); font-size: 15px;
+    }
+
+    /* ═══════════════════════════════
+       MODAL
+    ═══════════════════════════════ */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 18px; max-width: 660px; width: 100%;
+      max-height: 88vh; overflow-y: auto;
+      position: relative;
+      animation: mIn 0.22s cubic-bezier(0.2,0,0.1,1);
+      scrollbar-width: thin; scrollbar-color: var(--border2) transparent;
+    }
+
+    @keyframes mIn {
+      from { opacity: 0; transform: scale(0.94) translateY(12px); }
+      to   { opacity: 1; transform: scale(1)    translateY(0);    }
+    }
+
+    .modal::-webkit-scrollbar { width: 5px; }
+    .modal::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+    .modal-close {
+      position: absolute; top: 14px; right: 14px; z-index: 10;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.8); font-size: 16px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.18s;
+      line-height: 1;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.12); }
+
+    .modal-img-wrap {
+      width: 100%; height: 240px; border-radius: 16px 16px 0 0;
+      overflow: hidden; position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .modal-img-logo {
+      height: 64px; opacity: 0.35; object-fit: contain;
+      position: relative; z-index: 1;
+    }
+
+    .modal-accent { height: 3px; width: 100%; }
+
+    .modal-body { padding: 26px 30px 32px; }
+
+    .modal-brand-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 4px 11px; border-radius: 4px;
+      margin-bottom: 14px;
+    }
+
+    .modal-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(24px, 4vw, 32px); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.05;
+      margin-bottom: 6px;
+    }
+
+    .modal-sub { font-size: 14px; color: var(--text2); margin-bottom: 18px; }
+
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+
+    .mtag {
+      font-size: 12px; padding: 5px 12px; border-radius: 16px;
+      border: 1px solid var(--border2); color: var(--text2); font-weight: 500;
+    }
+
+    .modal-divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+    .modal-desc {
+      font-size: 14px; line-height: 1.82; color: var(--text2);
+      margin-bottom: 24px;
+    }
+
+    .modal-details-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    }
+
+    .mdetail {
+      background: rgba(255,255,255,0.025); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 14px;
+    }
+
+    .mdetail-label {
+      font-size: 10px; color: var(--text3); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px;
+    }
+
+    .mdetail-value { font-size: 14px; font-weight: 500; }
+
+    /* ─── Scrollbar global ─── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+    @media (max-width: 600px) {
+      .hdr { padding: 0 20px; }
+      .brands-wrap { padding: 40px 20px 60px; }
+      .brand-hero-overlay { padding: 0 24px; }
+      .products-section { padding: 28px 20px 60px; }
+      .modal-body { padding: 20px 20px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="hdr">
+  <img src="assets/realeaf_logo_white.png" alt="Realeaf Botanicals" class="hdr-logo">
+  <div class="hdr-right">
+    <button class="back-btn" id="backBtn" onclick="showBrands()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      All Brands
+    </button>
+  </div>
+</header>
+
+<!-- ══════════════════════
+     BRANDS SCREEN
+══════════════════════ -->
+<div class="screen active" id="brandsScreen">
+  <div class="brands-wrap">
+    <div class="brands-hero">
+      <div class="brands-hero-eyebrow">Realeaf Botanicals</div>
+      <h1>Our Brands</h1>
+      <p>Masterfully crafted cannabis products created to elevate your experience and exhilarate your life.</p>
+    </div>
+    <div class="brands-grid" id="brandsGrid"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     BRAND DETAIL SCREEN
+══════════════════════ -->
+<div class="screen" id="detailScreen">
+  <div class="brand-hero">
+    <div class="brand-hero-bg" id="detailHeroBg"></div>
+    <div class="brand-hero-overlay">
+      <div class="brand-hero-content">
+        <img id="detailLogo" src="" alt="" class="brand-hero-logo">
+        <div class="brand-hero-tagline" id="detailTagline"></div>
+        <p class="brand-hero-desc" id="detailDesc"></p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-accent-bar" id="detailAccentBar"></div>
+
+  <div class="products-section">
+    <div class="products-header">
+      <div class="products-title-row">
+        <span class="products-title">Products</span>
+        <span class="products-count" id="productsCount"></span>
+      </div>
+      <div class="filter-wrap" id="filterWrap"></div>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     PRODUCT MODAL
+══════════════════════ -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="backdropClick(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-img-wrap" id="modalImgWrap"></div>
+    <div class="modal-accent" id="modalAccent"></div>
+    <div class="modal-body">
+      <div class="modal-brand-badge" id="modalBadge"></div>
+      <h2 class="modal-name" id="modalName"></h2>
+      <p class="modal-sub" id="modalSub"></p>
+      <div class="modal-tags" id="modalTags"></div>
+      <div class="modal-divider"></div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-details-grid" id="modalDetails"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════
+   DATA
+════════════════════════════ */
+const BRANDS = [
+  {
+    id: 'skyy',
+    name: 'Skyy',
+    logoW: 'assets/skyy_logo_white.png',
+    hero: 'assets/website_sky_product_promo.png',
+    tagline: 'Dual Tanks. Skyy Smooth. Flavor Fusion On Demand.',
+    desc: 'Experience the perfect blend of craft cannabis and innovation with Skyy, elevating your vibe to new heights. Our dual-tank pod device delivers unmatched flavor fusion for the discerning enthusiast.',
+    color: '#00d4ff',
+    bgA: '#001520', bgB: '#003050',
+    products: [
+      {
+        id:'skyy-1', name:'Dual Tank Pod Device', sub:'By Realeaf Botanicals',
+        desc:'The Skyy Dual Tank Pod Device is engineered for the ultimate flavor fusion experience. Switch between two strains on demand with our patented dual-tank technology. Sleek, pocket-sized, and built for the modern cannabis enthusiast.',
+        tags:['Device','Dual-Tank','Vape','Rechargeable'],
+        details:{ Type:'Vape Device', Capacity:'2 × 0.5g', Battery:'350mAh', Charge:'USB-C' },
+        grad:'linear-gradient(135deg,#001520 0%,#003a5c 60%,#001520 100%)', image: 'https://loremflickr.com/400/300/vape?random=1'
+      },
+      {
+        id:'skyy-2', name:'Skyy Pod — Blue Dream + Wedding Cake', sub:'Hybrid Blend · 1g Total',
+        desc:'A harmonious blend of Blue Dream\'s energizing clarity and Wedding Cake\'s relaxing euphoria. Two perfectly matched strains in one pod, ready to switch on your command.',
+        tags:['Pod','Hybrid','1g','Vape'],
+        details:{ Type:'Pod Cartridge', Weight:'1g', THC:'82%', Blend:'Hybrid' },
+        grad:'linear-gradient(135deg,#001833 0%,#004488 60%,#001833 100%)', image: 'https://loremflickr.com/400/300/vape?random=2'
+      },
+      {
+        id:'skyy-3', name:'Skyy Pod — Strawberry Cough + Lemon Haze', sub:'Sativa Blend · 1g Total',
+        desc:'Wake up your senses with the bright, fruity fusion of Strawberry Cough and Lemon Haze. This sativa-forward blend delivers uplifting energy and crisp citrus notes that keep you going.',
+        tags:['Pod','Sativa','1g','Vape'],
+        details:{ Type:'Pod Cartridge', Weight:'1g', THC:'79%', Blend:'Sativa' },
+        grad:'linear-gradient(135deg,#0d0025 0%,#2a0070 60%,#0d0025 100%)', image: 'https://loremflickr.com/400/300/vape?random=3'
+      },
+      {
+        id:'skyy-4', name:'Skyy Pod — Sunset Sherbet + Gelato', sub:'Indica Blend · 1g Total',
+        desc:'Unwind with the creamy, dessert-inspired fusion of Sunset Sherbet and Gelato. A luxurious indica blend that melts away the day and delivers waves of relaxed euphoria.',
+        tags:['Pod','Indica','1g','Vape'],
+        details:{ Type:'Pod Cartridge', Weight:'1g', THC:'85%', Blend:'Indica' },
+        grad:'linear-gradient(135deg,#001028 0%,#003066 60%,#001028 100%)', image: 'https://loremflickr.com/400/300/vape?random=4'
+      },
+      {
+        id:'skyy-5', name:'Skyy Starter Kit', sub:'Device + Pod Bundle',
+        desc:'Everything you need to experience Skyy. Includes the Dual Tank Pod Device, one pod of your choice, and a USB-C charging cable. The perfect entry point into the Skyy experience.',
+        tags:['Bundle','Starter','Device','Pod'],
+        details:{ Type:'Bundle', Includes:'Device + Pod + Cable', Battery:'350mAh', Charge:'USB-C' },
+        grad:'linear-gradient(135deg,#001018 0%,#002845 60%,#001018 100%)', image: 'https://loremflickr.com/400/300/vape?random=5'
+      }
+    ]
+  },
+  {
+    id: 'fyre',
+    name: 'Fyre',
+    logoW: 'assets/fyre_logo_white.png',
+    hero: 'assets/website_fyre_product_promo.png',
+    tagline: 'Pocket-Sized. Party-Ready. Fuel The Fyre.',
+    desc: 'Enjoy Fyre Pre-Rolled Cannabis for a smooth, fire experience that ignites your senses and sets the vibe ablaze. Crafted in small batches for maximum potency and consistent burn.',
+    color: '#ff8c00',
+    bgA: '#1a0500', bgB: '#4a1400',
+    products: [
+      {
+        id:'fyre-1', name:'Fyre Minis — Original Blend', sub:'8-Pack Pre-Rolls · 0.5g Each',
+        desc:'The classic Fyre experience. Eight perfectly rolled mini pre-rolls packed with our signature blend. Smooth draw, consistent burn, and the signature Fyre kick every time.',
+        tags:['Pre-Roll','Minis','8-Pack','Hybrid'],
+        details:{ Type:'Pre-Roll', Count:'8 Pack', Weight:'0.5g each', Blend:'Hybrid' },
+        grad:'linear-gradient(135deg,#1a0500 0%,#4a1500 60%,#1a0500 100%)', image: 'https://loremflickr.com/400/300/smoke?random=6'
+      },
+      {
+        id:'fyre-2', name:'Fyre Minis — Sativa Blend', sub:'8-Pack Pre-Rolls · 0.5g Each',
+        desc:'Light up and level up. Our sativa-dominant mini pre-rolls deliver energizing, cerebral effects perfect for social situations and creative endeavors. Pure fire, every puff.',
+        tags:['Pre-Roll','Minis','8-Pack','Sativa'],
+        details:{ Type:'Pre-Roll', Count:'8 Pack', Weight:'0.5g each', Blend:'Sativa' },
+        grad:'linear-gradient(135deg,#100a00 0%,#302000 60%,#100a00 100%)', image: 'https://loremflickr.com/400/300/smoke?random=7'
+      },
+      {
+        id:'fyre-3', name:'Fyre Minis — Indica Blend', sub:'8-Pack Pre-Rolls · 0.5g Each',
+        desc:'Wind down with our indica-dominant mini pre-rolls. Deeply relaxing, full-bodied effects that calm the mind and soothe the body. The perfect end to any day.',
+        tags:['Pre-Roll','Minis','8-Pack','Indica'],
+        details:{ Type:'Pre-Roll', Count:'8 Pack', Weight:'0.5g each', Blend:'Indica' },
+        grad:'linear-gradient(135deg,#180600 0%,#401000 60%,#180600 100%)', image: 'https://loremflickr.com/400/300/smoke?random=8'
+      },
+      {
+        id:'fyre-4', name:'Fyre King Size Pre-Roll', sub:'Single · 1.5g Premium',
+        desc:'When minis aren\'t enough, go king size. Our flagship 1.5g pre-roll is hand-rolled with premium craft flower for a luxurious, extended smoking experience from start to finish.',
+        tags:['Pre-Roll','King-Size','Single','Premium'],
+        details:{ Type:'Pre-Roll', Size:'King Size', Weight:'1.5g', Rolling:'Hand-Rolled' },
+        grad:'linear-gradient(135deg,#200800 0%,#552000 60%,#200800 100%)', image: 'https://loremflickr.com/400/300/smoke?random=9'
+      },
+      {
+        id:'fyre-5', name:'Fyre Infused Minis', sub:'4-Pack Pre-Rolls · Kief-Coated',
+        desc:'Elevated beyond the ordinary. Our infused mini pre-rolls are coated in premium kief for enhanced potency and a slow, silky burn. For those who demand more from every session.',
+        tags:['Pre-Roll','Infused','Kief','4-Pack'],
+        details:{ Type:'Infused Pre-Roll', Count:'4 Pack', Weight:'0.75g each', Coating:'Premium Kief' },
+        grad:'linear-gradient(135deg,#250000 0%,#600808 60%,#250000 100%)', image: 'https://loremflickr.com/400/300/smoke?random=10'
+      }
+    ]
+  },
+  {
+    id: 'rayne',
+    name: 'Rayne',
+    logoW: 'assets/rayne_logo_white.png',
+    hero: 'assets/website_rayne_product_promo.png',
+    tagline: 'Rain Or Shine. These Drops Hit Every Time.',
+    desc: 'Unwind with Rayne Drops — our infused gummies with juicy fruit flavors that provide a perfectly mellow experience. Each drop is precisely dosed for consistent, delightful effects you can count on.',
+    color: '#a064f8',
+    bgA: '#0a0018', bgB: '#28005a',
+    products: [
+      {
+        id:'rayne-1', name:'Sour Power Drops — Variety Pack', sub:'10-Pack Gummies · 10mg THC Each',
+        desc:'The ultimate variety experience. Our Sour Power Drops Variety Pack features an assortment of tangy, fruit-forward gummies that hit exactly where you want them, every single time. 100mg total.',
+        tags:['Edible','Gummy','10mg','10-Pack','Variety'],
+        details:{ Type:'Infused Gummy', Count:'10 Pack', Dose:'10mg THC each', Total:'100mg THC' },
+        grad:'linear-gradient(135deg,#0a0018 0%,#28006a 60%,#0a0018 100%)', image: 'https://loremflickr.com/400/300/candy?random=11'
+      },
+      {
+        id:'rayne-2', name:'Rayne Drops — Strawberry', sub:'10-Pack Gummies · 10mg THC Each',
+        desc:'Sweet, ripe strawberry flavor infused with precisely 10mg of THC per drop. Juicy, consistent, and absolutely delicious. Rain or shine, Rayne Drops in Strawberry hit right.',
+        tags:['Edible','Gummy','10mg','10-Pack','Strawberry'],
+        details:{ Type:'Infused Gummy', Count:'10 Pack', Dose:'10mg THC each', Flavor:'Strawberry' },
+        grad:'linear-gradient(135deg,#200018 0%,#500040 60%,#200018 100%)', image: 'https://loremflickr.com/400/300/candy?random=12'
+      },
+      {
+        id:'rayne-3', name:'Rayne Drops — Watermelon', sub:'10-Pack Gummies · 10mg THC Each',
+        desc:'Crisp, refreshing watermelon bursting with flavor in every chew. Our Watermelon Rayne Drops deliver the same precise dosing and reliable effects in a summery, beloved flavor.',
+        tags:['Edible','Gummy','10mg','10-Pack','Watermelon'],
+        details:{ Type:'Infused Gummy', Count:'10 Pack', Dose:'10mg THC each', Flavor:'Watermelon' },
+        grad:'linear-gradient(135deg,#001a10 0%,#004020 60%,#001a10 100%)', image: 'https://loremflickr.com/400/300/candy?random=13'
+      },
+      {
+        id:'rayne-4', name:'Rayne Drops — Blue Raspberry', sub:'10-Pack Gummies · 10mg THC Each',
+        desc:'Bold, tangy blue raspberry with a satisfying sour kick. These drops pack the perfect punch of flavor and 10mg THC per drop — for those who like their Rayne with a little zing.',
+        tags:['Edible','Gummy','10mg','10-Pack','Blue Raspberry'],
+        details:{ Type:'Infused Gummy', Count:'10 Pack', Dose:'10mg THC each', Flavor:'Blue Raspberry' },
+        grad:'linear-gradient(135deg,#000a28 0%,#001668 60%,#000a28 100%)', image: 'https://loremflickr.com/400/300/candy?random=14'
+      },
+      {
+        id:'rayne-5', name:'Rayne 2:1 CBD:THC Drops', sub:'10-Pack Gummies · Balanced Blend',
+        desc:'A perfectly balanced blend for those seeking a milder, wellness-focused experience. Our 2:1 CBD:THC drops offer gentle relief and relaxation without overwhelming psychoactive effects.',
+        tags:['Edible','Gummy','CBD','5mg THC','Wellness'],
+        details:{ Type:'Infused Gummy', Count:'10 Pack', THC:'5mg each', CBD:'10mg each' },
+        grad:'linear-gradient(135deg,#051520 0%,#103040 60%,#051520 100%)', image: 'https://loremflickr.com/400/300/candy?random=15'
+      }
+    ]
+  },
+  {
+    id: 'foryst',
+    name: 'Foryst',
+    logoW: 'assets/foryst_logo_white.png',
+    hero: 'assets/website_foryst_product_promo.png',
+    tagline: 'Craft Cannabis. Small Batch. Exceptional Quality.',
+    desc: 'Foryst delivers premium craft cannabis flower in small, carefully curated batches. Each strain is hand-selected for its unique terpene profile, potency, and overall smoking experience.',
+    color: '#e85d1e',
+    bgA: '#150500', bgB: '#3c1200',
+    products: [
+      {
+        id:'foryst-1', name:'Cara Cara', sub:'Indica · 3.5g Craft Flower',
+        desc:'A deeply relaxing indica with sweet citrus notes and hints of berry. Cara Cara\'s dense, resinous buds deliver a powerful body effect paired with a pleasantly euphoric mental state. A true craft classic.',
+        tags:['Flower','Indica','3.5g','Craft','Relaxing'],
+        details:{ Type:'Flower', Weight:'3.5g', Blend:'Indica', THC:'24–27%' },
+        grad:'linear-gradient(135deg,#1a0500 0%,#4a1200 60%,#1a0500 100%)', image: 'https://loremflickr.com/400/300/leaf?random=16'
+      },
+      {
+        id:'foryst-2', name:'Hella Jelly', sub:'Hybrid · 3.5g Craft Flower',
+        desc:'Sweet, fruity, and undeniably dank. Hella Jelly is a balanced hybrid with a complex terpene profile featuring notes of grape, berry, and tropical fruit. Smooth smoke, well-rounded effects.',
+        tags:['Flower','Hybrid','3.5g','Craft','Fruity'],
+        details:{ Type:'Flower', Weight:'3.5g', Blend:'Hybrid', THC:'26–29%' },
+        grad:'linear-gradient(135deg,#150a20 0%,#381a44 60%,#150a20 100%)', image: 'https://loremflickr.com/400/300/leaf?random=17'
+      },
+      {
+        id:'foryst-3', name:'Jelly Donutz', sub:'Indica · 3.5g Craft Flower',
+        desc:'Sweet, doughy, and delightfully relaxing. Jelly Donutz lives up to its name with dessert-forward terpenes and a deeply calming indica experience. Perfect for evening sessions.',
+        tags:['Flower','Indica','3.5g','Craft','Sweet'],
+        details:{ Type:'Flower', Weight:'3.5g', Blend:'Indica', THC:'25–28%' },
+        grad:'linear-gradient(135deg,#1a0010 0%,#420025 60%,#1a0010 100%)', image: 'https://loremflickr.com/400/300/leaf?random=18'
+      },
+      {
+        id:'foryst-4', name:'Jungle Sunset', sub:'Sativa · 3.5g Craft Flower',
+        desc:'A vibrant, energizing sativa bursting with tropical and citrus terpenes. Jungle Sunset delivers an uplifting, creative high perfect for daytime adventures and outdoor activities.',
+        tags:['Flower','Sativa','3.5g','Craft','Energizing'],
+        details:{ Type:'Flower', Weight:'3.5g', Blend:'Sativa', THC:'22–25%' },
+        grad:'linear-gradient(135deg,#1a0800 0%,#602000 60%,#1a0800 100%)', image: 'https://loremflickr.com/400/300/leaf?random=19'
+      },
+      {
+        id:'foryst-5', name:'Humboldt Dreams', sub:'Hybrid · 3.5g Craft Flower',
+        desc:'Inspired by California\'s legendary growing region, Humboldt Dreams is a premium hybrid with earthy pine, lemon, and spice notes. A well-balanced, long-lasting experience that soothes without sedating.',
+        tags:['Flower','Hybrid','3.5g','Craft','Premium'],
+        details:{ Type:'Flower', Weight:'3.5g', Blend:'Hybrid', THC:'23–26%' },
+        grad:'linear-gradient(135deg,#081200 0%,#182e00 60%,#081200 100%)', image: 'https://loremflickr.com/400/300/leaf?random=20'
+      },
+      {
+        id:'foryst-6', name:'Boo Berry Cookies', sub:'Indica · 3.5g Craft Flower',
+        desc:'A hauntingly good indica cross with notes of blueberry, vanilla, and earthy sweetness. Boo Berry Cookies delivers a creeping body high and dreamy, relaxed mental state. A fan favorite.',
+        tags:['Flower','Indica','3.5g','Craft','Berry'],
+        details:{ Type:'Flower', Weight:'3.5g', Blend:'Indica', THC:'27–30%' },
+        grad:'linear-gradient(135deg,#060012 0%,#180035 60%,#060012 100%)', image: 'https://loremflickr.com/400/300/leaf?random=21'
+      }
+    ]
+  }
+];
+
+/* ════════════════════════════
+   STATE
+════════════════════════════ */
+let activeBrand = null;
+let activeFilter = 'All';
+
+/* ════════════════════════════
+   INIT
+════════════════════════════ */
+document.addEventListener('DOMContentLoaded', renderBrands);
+
+/* ════════════════════════════
+   BRANDS SCREEN
+════════════════════════════ */
+function renderBrands() {
+  const grid = document.getElementById('brandsGrid');
+  grid.innerHTML = BRANDS.map(b => `
+    <div class="brand-card" data-brand="${b.id}" onclick="openBrand('${b.id}')">
+      <div class="brand-card-bg" style="background-image:url('${b.hero}')"></div>
+      <div class="brand-card-overlay">
+        <img src="${b.logoW}" alt="${b.name}" class="brand-card-logo">
+        <p class="brand-card-tagline">${b.tagline}</p>
+        <div class="brand-card-btn">Explore ${b.name} <span style="opacity:.7">›</span></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ════════════════════════════
+   OPEN BRAND
+════════════════════════════ */
+function openBrand(id) {
+  const b = BRANDS.find(x => x.id === id);
+  if (!b) return;
+  activeBrand = b;
+  activeFilter = 'All';
+
+  document.getElementById('detailHeroBg').style.backgroundImage = `url('${b.hero}')`;
+  document.getElementById('detailLogo').src = b.logoW;
+  document.getElementById('detailLogo').alt = b.name;
+  document.getElementById('detailTagline').textContent = b.tagline;
+  document.getElementById('detailDesc').textContent = b.desc;
+  document.getElementById('detailAccentBar').style.background = b.color;
+
+  document.getElementById('backBtn').classList.add('show');
+
+  buildFilters(b);
+  renderProducts(b.products);
+
+  document.getElementById('brandsScreen').classList.remove('active');
+  document.getElementById('detailScreen').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function showBrands() {
+  document.getElementById('detailScreen').classList.remove('active');
+  document.getElementById('brandsScreen').classList.add('active');
+  document.getElementById('backBtn').classList.remove('show');
+  activeBrand = null;
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+/* ════════════════════════════
+   FILTERS
+════════════════════════════ */
+function buildFilters(b) {
+  const allTags = ['All', ...new Set(b.products.flatMap(p => p.tags))];
+  const wrap = document.getElementById('filterWrap');
+  wrap.innerHTML = allTags.map(t => `
+    <button class="filter-chip ${t === 'All' ? 'on' : ''}"
+            data-tag="${t}"
+            style="${t === 'All' ? chipStyle(b.color) : ''}"
+            onclick="applyFilter('${t}',this)">
+      ${t}
+    </button>
+  `).join('');
+}
+
+function chipStyle(color) {
+  return `--chip-bg:${color}18;--chip-border:${color};--chip-text:${color};`;
+}
+
+function applyFilter(tag, btn) {
+  activeFilter = tag;
+  const color = activeBrand.color;
+
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.classList.remove('on');
+    c.style.cssText = '';
+  });
+  btn.classList.add('on');
+  btn.style.cssText = chipStyle(color);
+
+  let shown = 0;
+  document.querySelectorAll('.prod-card').forEach(card => {
+    const tags = card.dataset.tags.split(',');
+    if (tag === 'All' || tags.includes(tag)) {
+      card.classList.remove('hidden');
+      shown++;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('productsCount').textContent = `${shown} item${shown !== 1 ? 's' : ''}`;
+}
+
+/* ════════════════════════════
+   PRODUCTS GRID
+════════════════════════════ */
+function renderProducts(products) {
+  const grid = document.getElementById('productsGrid');
+  const b = activeBrand;
+
+  grid.innerHTML = products.map(p => `
+    <div class="prod-card" data-id="${p.id}" data-tags="${p.tags.join(',')}"
+         onclick="openProduct('${p.id}')">
+      <div class="prod-thumb" style="${p.image ? `background:url('${p.image}') center/cover` : `background:${p.grad}`}">
+        ${p.image ? '' : `<img src="${b.logoW}" alt="${b.name}" class="prod-thumb-logo">`}
+      </div>
+      <div class="prod-body">
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-sub">${p.sub}</div>
+        <div class="prod-tags">
+          ${p.tags.slice(0,4).map(t => `<span class="ptag">${t}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('productsCount').textContent =
+    `${products.length} item${products.length !== 1 ? 's' : ''}`;
+}
+
+/* ════════════════════════════
+   PRODUCT MODAL
+════════════════════════════ */
+function openProduct(id) {
+  const b = activeBrand;
+  const p = b.products.find(x => x.id === id);
+  if (!p) return;
+
+  // image
+  document.getElementById('modalImgWrap').innerHTML = `
+    <div style="position:absolute;inset:0;${p.image ? `background:url('${p.image}') center/cover` : `background:${p.grad}`}"></div>
+    ${p.image ? '' : `<img src="${b.logoW}" alt="${b.name}" class="modal-img-logo">`}
+  `;
+  document.getElementById('modalImgWrap').style.position = 'relative';
+
+  document.getElementById('modalAccent').style.background = b.color;
+
+  // badge
+  const badge = document.getElementById('modalBadge');
+  badge.textContent = b.name;
+  badge.style.cssText = `background:${b.color}1a;color:${b.color};border:1px solid ${b.color}35;`;
+
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalSub').textContent = p.sub;
+  document.getElementById('modalDesc').textContent = p.desc;
+
+  document.getElementById('modalTags').innerHTML =
+    p.tags.map(t => `<span class="mtag">${t}</span>`).join('');
+
+  document.getElementById('modalDetails').innerHTML =
+    Object.entries(p.details).map(([k, v]) => `
+      <div class="mdetail">
+        <div class="mdetail-label">${k}</div>
+        <div class="mdetail-value">${v}</div>
+      </div>
+    `).join('');
+
+  document.getElementById('modal').scrollTop = 0;
+  document.getElementById('modalBackdrop').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+}
+
+function backdropClick(e) {
+  if (e.target === document.getElementById('modalBackdrop')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js')
+          .then(function (reg) { console.log('[PWA] SW registered:', reg.scope); })
+          .catch(function (err) { console.warn('[PWA] SW registration failed:', err); });
+      });
+    }
+  </script>
+</body>
+</html>
