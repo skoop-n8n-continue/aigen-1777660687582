@@ -143,7 +143,7 @@
           "name": "Skyy",
           "tagline": "Dual Tanks. Skyy Smooth. Flavor Fusion On Demand.",
           "desc": "Experience the perfect blend of craft cannabis and innovation with Skyy, elevating your vibe to new heights. Our dual-tank pod device delivers unmatched flavor fusion for the discerning enthusiast.",
-          "color": "#00d4ff",
+          "color": "#ffbb00",
           "logoW": "assets/brands/brand_1kx5ge_logow_23w9jt.png",
           "hero": "assets/brands/brand_1kx5ge_hero_qq6dhr.png"
         },
@@ -260,12 +260,12 @@
       "value": [
         {
           "id": "prod_12mc7c",
-          "name": "Dual Tank Pod Device",
+          "name": "ef3f334f",
           "sub": "By Realeaf Botanicals",
           "desc": "The Skyy Dual Tank Pod Device is engineered for the ultimate flavor fusion experience. Switch between two strains on demand with our patented dual-tank technology. Sleek, pocket-sized, and built for the modern cannabis enthusiast.",
           "tags": "Device, Dual-Tank, Vape, Rechargeable",
           "brand": "brand_1kx5ge",
-          "image": "https://loremflickr.com/400/300/vape?random=1",
+          "image": "assets/products/prod_12mc7c_image.png",
           "grad": "linear-gradient(135deg,#001520 0%,#003a5c 60%,#001520 100%)",
           "detail_1_label": "Type",
           "detail_1_value": "Vape Device",
