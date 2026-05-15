@@ -1,5 +1,43 @@
 'use strict';
 
+// ---------------------------------------------------------------------------
+// Fetch shim — intercepts fetch('data.json') for two purposes:
+//   1. Tier 2 srcdoc preview: when __skoop_dirty_data__ is set (injected by
+//      the configurator into the srcdoc <head>), return it directly so the
+//      page renders unsaved changes without an S3 round-trip.
+//   2. Normal S3 load: stash a Promise for the data.json response in
+//      __skoop_initial_data__ so the runtime can apply all data-bind-*
+//      bindings (including show/hide) automatically after init() finishes.
+// This shim is in skoop-live.js (not an inline <script>) so it is always
+// fresh on each deployment — no stale code risk from agent-copied HTML.
+// ---------------------------------------------------------------------------
+(function () {
+  var dirty = window.__skoop_dirty_data__;
+  var origFetch = window.fetch ? window.fetch.bind(window) : null;
+  window.fetch = function (input, init) {
+    try {
+      var url = typeof input === 'string' ? input : (input && input.url) || '';
+      if (/(^\.\/)?(data\.json)(\?.*)?$/.test(url) || /(^|\/)data\.json(\?.*)?$/.test(url)) {
+        if (dirty) {
+          window.__skoop_initial_data__ = Promise.resolve(dirty);
+          var body = JSON.stringify(dirty);
+          return Promise.resolve(new Response(body, {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+          }));
+        }
+        // Normal load: pass through and stash a promise that resolves with the data
+        var p = origFetch ? origFetch(input, init) : Promise.reject(new Error('fetch unavailable'));
+        window.__skoop_initial_data__ = p.then(function (response) {
+          return response.clone().json();
+        }).catch(function () { return null; });
+        return p;
+      }
+    } catch (e) {}
+    return origFetch ? origFetch(input, init) : Promise.reject(new Error('fetch unavailable'));
+  };
+})();
+
 /**
  * Skoop Live Preview Runtime
  *
@@ -37,6 +75,84 @@
 (function () {
   if (window.SkoopLive) return; // idempotent — only one runtime per page
 
+  // ── Module-level live-preview state ────────────────────────────────────────
+  // _liveData    — last data document received via postMessage; null on initial load
+  // _applyingLiveData — true while we are writing to the DOM; the MutationObserver
+  //                     callback skips re-entry when this flag is set
+  // _liveObserver — the single MutationObserver instance; created lazily on first
+  //                 postMessage, observes document.body subtree for the entire
+  //                 configurator session
+  var _liveData = null;
+  var _applyingLiveData = false;
+  var _liveObserver = null;
+
+  // All data-bind-* attribute names — used by the observer to decide whether a
+  // mutated element is one we care about.
+  var BIND_ATTRS = [
+    'data-bind-text', 'data-bind-html', 'data-bind-currency', 'data-bind-number',
+    'data-bind-percent', 'data-bind-src', 'data-bind-href', 'data-bind-bg-image',
+    'data-bind-color', 'data-bind-bg-color', 'data-bind-border-color',
+    'data-bind-show', 'data-bind-hide', 'data-bind-class',
+    'data-bind-attr', 'data-bind-style',
+  ];
+
+  // Returns true if el (or a close ancestor) carries any data-bind-* attribute.
+  // We check up to 2 levels up so characterData mutations (which target the text
+  // node, not the element) are mapped back to their bound parent element.
+  function hasBoundElement(node) {
+    var el = (node && node.nodeType === 3) ? node.parentElement : node;
+    for (var depth = 0; depth < 3 && el && el.hasAttribute; depth++, el = el.parentElement) {
+      for (var i = 0; i < BIND_ATTRS.length; i++) {
+        if (el.hasAttribute(BIND_ATTRS[i])) return true;
+      }
+    }
+    return false;
+  }
+
+  // Re-apply bindings from _liveData, guarded against re-entrant calls.
+  // Uses Promise.resolve() to defer clearing the guard past the current
+  // microtask batch — this ensures observer callbacks triggered by our OWN
+  // DOM writes (which are microtasks) see _applyingLiveData = true and skip,
+  // while subsequent app-timer-driven mutations are caught correctly.
+  function reapplyLiveBindings() {
+    if (!_liveData) return;
+    _applyingLiveData = true;
+    try {
+      applyBindings(_liveData.sections || _liveData);
+    } catch (e) {}
+    var clearFlag = function () { _applyingLiveData = false; };
+    if (typeof Promise !== 'undefined') {
+      Promise.resolve().then(clearFlag);
+    } else {
+      setTimeout(clearFlag, 0);
+    }
+  }
+
+  // Create (or no-op if already running) the MutationObserver that watches for
+  // app-timer-driven DOM reversions and immediately re-applies live bindings.
+  // Observes attributes (style, hidden, class, src, href), characterData, and
+  // childList (for textContent replacements which remove + add text nodes).
+  function activateLiveObserver() {
+    if (_liveObserver || typeof MutationObserver === 'undefined') return;
+    _liveObserver = new MutationObserver(function (mutations) {
+      if (_applyingLiveData || !_liveData) return;
+      for (var i = 0; i < mutations.length; i++) {
+        if (hasBoundElement(mutations[i].target)) {
+          reapplyLiveBindings();
+          return; // one re-apply covers all mutations in the batch
+        }
+      }
+    });
+    var root = document.body || document.documentElement;
+    _liveObserver.observe(root, {
+      subtree: true,
+      attributes: true,
+      characterData: true,
+      childList: true,  // needed for textContent replacement (removes then adds text node)
+    });
+  }
+  // ── End MutationObserver setup ──────────────────────────────────────────────
+
   // Resolve a dot-separated path against the sections object. Handles typed
   // field unwrapping (returns .value when the resolved node is a typed field)
   // and collection wrappers (drills into .value array on numeric keys).
@@ -72,8 +188,9 @@
   }
 
   function applyColorVariables(sections) {
-    if (!sections || typeof sections !== 'object') return;
+    if (!sections || typeof sections !== 'object') return [];
     var root = document.documentElement;
+    var covered = [];
     for (var sectionKey in sections) {
       var section = sections[sectionKey];
       if (!section || typeof section !== 'object') continue;
@@ -83,9 +200,12 @@
         var field = section[fieldKey];
         if (field && field.type === 'color' && typeof field.value === 'string') {
           root.style.setProperty('--' + kebab(fieldKey), field.value);
+          // Record the full path so the ACK covers these implicit color bindings
+          covered.push(sectionKey + '.' + fieldKey);
         }
       }
     }
+    return covered;
   }
 
   function setSrc(el, value) {
@@ -101,7 +221,7 @@
   function applyBindings(sections) {
     if (!sections) return;
 
-    applyColorVariables(sections);
+    var colorPaths = applyColorVariables(sections);
 
     var nodeList;
 
@@ -195,22 +315,36 @@
       if (typeof vB === 'string') elB.style.borderColor = vB;
     }
 
-    // show — hidden when value is exactly false
+    // show — hidden when value is falsy (false, 0, "", null, undefined)
     nodeList = document.querySelectorAll('[data-bind-show]');
     for (var iC = 0; iC < nodeList.length; iC++) {
       var elC = nodeList[iC];
       var vC = readPath(sections, elC.getAttribute('data-bind-show'));
-      if (vC === false) elC.setAttribute('hidden', '');
-      else elC.removeAttribute('hidden');
+      // Coerce to boolean — catches strict false, string "false", 0, null, undefined
+      var showC = (vC === 'false' || vC === false || vC === 0 || vC === null || vC === undefined) ? false : !!vC;
+      if (!showC) {
+        elC.setAttribute('hidden', '');
+        elC.style.display = 'none';
+      } else {
+        elC.removeAttribute('hidden');
+        elC.style.display = '';
+      }
     }
 
-    // hide — hidden when value is exactly true
+    // hide — hidden when value is truthy (true, 1, "true")
     nodeList = document.querySelectorAll('[data-bind-hide]');
     for (var iD = 0; iD < nodeList.length; iD++) {
       var elD = nodeList[iD];
       var vD = readPath(sections, elD.getAttribute('data-bind-hide'));
-      if (vD === true) elD.setAttribute('hidden', '');
-      else elD.removeAttribute('hidden');
+      // Coerce to boolean — catches strict true, string "true", 1
+      var hideD = (vD === 'true' || vD === true || vD === 1) ? true : false;
+      if (hideD) {
+        elD.setAttribute('hidden', '');
+        elD.style.display = 'none';
+      } else {
+        elD.removeAttribute('hidden');
+        elD.style.display = '';
+      }
     }
 
     // class — adds class "<lastKey>-<value>", removing previous matching variants
@@ -226,6 +360,43 @@
           if (existing[iEx].indexOf(prefix) === 0) elE.classList.remove(existing[iEx]);
         }
         elE.classList.add(prefix + vE);
+      }
+    }
+
+    // Collect every unique path actually present in data-bind-* attributes so
+    // we can ACK the parent with the full set of covered paths after applying.
+    // This drives automatic Tier 2 fallback in the configurator: if a changed
+    // path was not in the ACK set, no binding existed for it, so the configurator
+    // triggers a srcdoc reload instead of leaving the preview stale.
+    // Also seed with paths covered implicitly by applyColorVariables (no element
+    // attribute needed for top-level color fields — the runtime writes :root CSS
+    // variables for those automatically, so they should NOT trigger Tier 2).
+    var coveredPaths = {};
+    for (var iCol = 0; iCol < colorPaths.length; iCol++) {
+      coveredPaths[colorPaths[iCol]] = true;
+    }
+    var allBound = document.querySelectorAll('[data-bind-text],[data-bind-html],[data-bind-currency],[data-bind-number],[data-bind-percent],[data-bind-src],[data-bind-href],[data-bind-bg-image],[data-bind-color],[data-bind-bg-color],[data-bind-border-color],[data-bind-show],[data-bind-hide],[data-bind-class]');
+    for (var iCov = 0; iCov < allBound.length; iCov++) {
+      var elCov = allBound[iCov];
+      var attrs = ['data-bind-text','data-bind-html','data-bind-currency','data-bind-number','data-bind-percent','data-bind-src','data-bind-href','data-bind-bg-image','data-bind-color','data-bind-bg-color','data-bind-border-color','data-bind-show','data-bind-hide','data-bind-class'];
+      for (var iA2 = 0; iA2 < attrs.length; iA2++) {
+        var av = elCov.getAttribute(attrs[iA2]);
+        if (av) coveredPaths[av.trim()] = true;
+      }
+    }
+    // data-bind-attr and data-bind-style have comma-separated "key:path" pairs
+    var multiBindAttrs = ['data-bind-attr','data-bind-style'];
+    var allMulti = document.querySelectorAll('[data-bind-attr],[data-bind-style]');
+    for (var iMul = 0; iMul < allMulti.length; iMul++) {
+      for (var iMb = 0; iMb < multiBindAttrs.length; iMb++) {
+        var mbVal = allMulti[iMul].getAttribute(multiBindAttrs[iMb]);
+        if (!mbVal) continue;
+        var mbPairs = mbVal.split(',');
+        for (var iMp = 0; iMp < mbPairs.length; iMp++) {
+          var mbPair = mbPairs[iMp].trim();
+          var mbColon = mbPair.indexOf(':');
+          if (mbColon >= 0) coveredPaths[mbPair.slice(mbColon + 1).trim()] = true;
+        }
       }
     }
 
@@ -276,6 +447,21 @@
         } catch (_) { /* invalid property names silently ignored */ }
       }
     }
+    // Send ACK to parent window with the set of data paths covered by
+    // data-bind-* attributes. The configurator uses this to decide whether
+    // a Tier 2 reload is needed: if the just-changed path is not in the
+    // covered set, no binding existed for it and a reload is triggered.
+    // The ACK also carries a msgId echoed from the incoming message so the
+    // configurator can match it to the pending broadcast.
+    try {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'skoop:config_ack',
+          paths: Object.keys(coveredPaths),
+          msgId: window.__skoop_last_msg_id__ || null,
+        }, '*');
+      }
+    } catch (_) { /* cross-origin parent — ACK silently dropped */ }
   }
 
   // Public API
@@ -290,24 +476,51 @@
     },
   };
 
-  // Apply on initial page load — runs after the page's own init() has built
-  // the DOM. Listens for DOMContentLoaded so it doesn't matter where this
-  // script is included relative to the page's main script.
+  // Apply on initial page load — two mechanisms depending on context:
+  //
+  // 1. Dirty data (srcdoc Tier 2 preview): __skoop_dirty_data__ is set before
+  //    the page's script runs, so apply it immediately.
+  //
+  // 2. Normal S3 load: the fetch shim stashes the data.json response in
+  //    __skoop_initial_data__. We watch #app-container for the '.loaded' class
+  //    (added by init() when it finishes building the DOM) and apply all
+  //    data-bind-* bindings at that point — including show/hide initial states.
+  //    This is automatic for every app without requiring any app code change.
   function applyFromInjectedOrFetch() {
     if (window.__skoop_dirty_data__) {
       window.SkoopLive.apply(window.__skoop_dirty_data__);
       return;
     }
-    // The page's own init() already fetched and applied data.json. We don't
-    // re-fetch here — bindings are applied on the existing DOM that init()
-    // built, using the same data the page already loaded. To do that we
-    // intercept the fetch and stash the result, OR we just wait for the
-    // page to set window.__skoop_data__ if it chooses to expose it. Most
-    // apps won't, so we no-op here on initial load — bindings are inert
-    // until the configurator sends a postMessage update.
-    //
-    // The only critical case is when dirty data is already set (preview
-    // reload via srcdoc), and that's handled above.
+    
+    function applyDataPromise() {
+      if (window.__skoop_initial_data__ && typeof window.__skoop_initial_data__.then === 'function') {
+        window.__skoop_initial_data__.then(function (data) {
+          if (data) window.SkoopLive.apply(data);
+        });
+      } else if (window.__skoop_initial_data__) {
+        window.SkoopLive.apply(window.__skoop_initial_data__);
+      }
+    }
+
+    // Watch for .loaded class on #app-container to auto-apply initial bindings
+    // once the app's async init() has finished building the DOM.
+    var appEl = document.getElementById('app-container');
+    if (!appEl) return;
+    // Already loaded (e.g. synchronous init)
+    if (appEl.classList.contains('loaded')) {
+      applyDataPromise();
+      return;
+    }
+    var loadedObs = new MutationObserver(function (mutations) {
+      for (var m = 0; m < mutations.length; m++) {
+        if (mutations[m].target.classList && mutations[m].target.classList.contains('loaded')) {
+          loadedObs.disconnect();
+          applyDataPromise();
+          return;
+        }
+      }
+    });
+    loadedObs.observe(appEl, { attributes: true, attributeFilter: ['class'] });
   }
 
   // Run after the page's main script has had a chance to build the DOM
@@ -323,6 +536,66 @@
     if (e.data.type !== 'skoop:config_update') return;
     var payload = e.data.data;
     if (!payload) return;
+    // Store msgId so applyBindings can echo it in the ACK
+    window.__skoop_last_msg_id__ = e.data.msgId || null;
+    // Store live data so the MutationObserver can re-apply it when the app's
+    // own timer loop reverts our changes (e.g. a clock's setInterval writing
+    // style.display from the original closed-over data object every second).
+    _liveData = payload;
+    // Arm the guard BEFORE applying so observer callbacks triggered by our
+    // own DOM writes (delivered as microtasks) see the flag set and skip.
+    _applyingLiveData = true;
     window.SkoopLive.apply(payload);
+    // Defer clearing the flag past the current microtask batch.
+    var clearFlag = function () { _applyingLiveData = false; };
+    if (typeof Promise !== 'undefined') {
+      Promise.resolve().then(clearFlag);
+    } else {
+      setTimeout(clearFlag, 0);
+    }
+    // Start the observer (no-op if already running).
+    activateLiveObserver();
+
+    // ── Visibility safety check ───────────────────────────────────────────────
+    // After applying show/hide bindings, verify that each element that should
+    // be visible actually IS visible. If not, a parent element is blocking it
+    // (e.g. app's init() set the container to display:none based on the original
+    // data). Since the runtime can't reach parent elements without a binding,
+    // request a full Tier 2 reload from the builder so the page re-initializes
+    // from the dirty data correctly (intervals started, containers shown, etc.).
+    //
+    // Detection: el.offsetParent === null whenever the element OR any ancestor
+    // has display:none. Since applyBindings already set el.style.display='' and
+    // removed hidden on the element itself, offsetParent===null means a PARENT
+    // is blocking it. Exception: position:fixed always has null offsetParent
+    // even when visible — guard with a getComputedStyle(position) check.
+    //
+    // Note: getComputedStyle(el).display is NOT suitable here — it returns the
+    // element's own display value (e.g. "inline"), not parent cascade visibility.
+    // offsetParent correctly reflects ancestor display:none.
+    //
+    // Only runs on direct postMessage updates (not MutationObserver re-applies).
+    // Hiding always succeeds (inline display:none wins over parents), so only
+    // "should be shown" elements need the check.
+    try {
+      if (window.parent && window.parent !== window) {
+        var sections = payload.sections || payload;
+        var showEls = document.querySelectorAll('[data-bind-show]');
+        for (var iV = 0; iV < showEls.length; iV++) {
+          var elV = showEls[iV];
+          var valV = readPath(sections, elV.getAttribute('data-bind-show'));
+          var shouldShowV = !(valV === 'false' || valV === false || valV === 0 || valV === null || valV === undefined);
+          if (shouldShowV && elV.offsetParent === null) {
+            // offsetParent===null on a "should show" element means an ancestor has
+            // display:none. Exclude position:fixed (legitimate null offsetParent).
+            var csV = window.getComputedStyle ? window.getComputedStyle(elV) : null;
+            if (!csV || (csV.display !== 'none' && csV.position !== 'fixed')) {
+              window.parent.postMessage({ type: 'skoop:request_tier2' }, '*');
+              break; // one request is enough; the reload will fix all elements
+            }
+          }
+        }
+      }
+    } catch (_) { /* offsetParent or postMessage unavailable — skip check */ }
   });
 })();
