@@ -13,7 +13,6 @@
     window.fetch = function (input, init) {
       try {
         var url = typeof input === 'string' ? input : (input && input.url) || '';
-        // Match bare 'data.json', './data.json', or any URL ending /data.json (with or without query)
         if (/(^|\/)data\.json(\?.*)?$/.test(url) || url === 'data.json') {
           var body = JSON.stringify(dirty);
           return Promise.resolve(new Response(body, {
@@ -33,28 +32,12 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg: #080808;
-      --bg2: #101010;
-      --bg3: #161616;
-      --bg4: #1e1e1e;
-      --border: #232323;
-      --border2: #2e2e2e;
-      --text: #ffffff;
-      --text2: #999999;
-      --text3: #555555;
-      --green: #3d7a45;
-      --green2: #4caf50;
-    }
-
     #app-container {
       opacity: 0;
       transition: opacity 0.3s ease;
       height: 100%;
     }
-    #app-container.loaded {
-      opacity: 1;
-    }
+    #app-container.loaded { opacity: 1; }
 
     html, body {
       height: 100%;
@@ -75,11 +58,8 @@
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
-
     .hdr-logo { height: 36px; object-fit: contain; }
-
     .hdr-right { display: flex; align-items: center; gap: 16px; }
-
     .back-btn {
       display: none; align-items: center; gap: 8px;
       background: none; border: 1px solid var(--border2);
@@ -90,13 +70,11 @@
     }
     .back-btn:hover { background: var(--bg3); border-color: #444; }
     .back-btn.show { display: flex; }
-
     .back-btn svg { flex-shrink: 0; }
 
     /* ─── SCREENS ─── */
     .screen { display: none; animation: fadeIn 0.3s ease; }
     .screen.active { display: block; }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
@@ -105,44 +83,28 @@
     /* ═══════════════════════════════
        BRANDS SCREEN
     ═══════════════════════════════ */
-    .brands-wrap {
-      padding: 64px 48px 80px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .brands-hero {
-      text-align: center;
-      margin-bottom: 64px;
-    }
-
+    .brands-wrap { padding: 64px 48px 80px; max-width: 1400px; margin: 0 auto; }
+    .brands-hero { text-align: center; margin-bottom: 64px; }
     .brands-hero-eyebrow {
       font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--green2);
-      margin-bottom: 14px;
+      text-transform: uppercase; color: var(--green2); margin-bottom: 14px;
     }
-
     .brands-hero h1 {
       font-family: 'Oswald', sans-serif;
       font-size: clamp(42px, 6vw, 72px);
       font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 16px;
+      line-height: 1; margin-bottom: 16px;
     }
-
-    .brands-hero p {
-      font-size: 16px; color: var(--text2);
-      line-height: 1.7; max-width: 520px; margin: 0 auto;
-    }
+    .brands-hero p { font-size: 16px; color: var(--text2); line-height: 1.7; max-width: 520px; margin: 0 auto; }
 
     .brands-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
     }
-
     @media (max-width: 720px) { .brands-grid { grid-template-columns: 1fr; } }
-    @media (min-width: 1300px) { .brands-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (min-width: 1100px) { .brands-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1400px) { .brands-grid { grid-template-columns: repeat(4, 1fr); } }
 
     .brand-card {
       position: relative; overflow: hidden; border-radius: 14px;
@@ -151,32 +113,23 @@
       transition: transform 0.32s cubic-bezier(0.2,0,0.1,1),
                   box-shadow 0.32s ease, border-color 0.32s ease;
     }
-
     .brand-card:hover {
       transform: translateY(-5px) scale(1.01);
       box-shadow: 0 24px 60px color-mix(in srgb, var(--brand-color) 12%, transparent), 0 0 0 1px var(--brand-color);
       border-color: var(--brand-color);
     }
-
     .brand-card-bg {
       position: absolute; inset: 0;
       background-size: cover; background-position: center;
       transition: transform 0.5s cubic-bezier(0.2,0,0.1,1);
     }
     .brand-card:hover .brand-card-bg { transform: scale(1.06); }
-
     .brand-card-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.92) 0%,
-        rgba(0,0,0,0.5) 50%,
-        rgba(0,0,0,0.15) 100%
-      );
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.15) 100%);
       display: flex; flex-direction: column;
       justify-content: flex-end; padding: 24px 22px 22px;
     }
-
     .brand-card-logo {
       height: 38px; object-fit: contain; object-position: left;
       margin-bottom: 10px;
@@ -184,127 +137,66 @@
       transition: filter 0.2s;
     }
     .brand-card:hover .brand-card-logo { filter: drop-shadow(0 2px 12px rgba(255,255,255,0.2)); }
-
     .brand-card-tagline {
       font-size: 12px; color: rgba(255,255,255,0.65);
       line-height: 1.5; margin-bottom: 14px;
       display: -webkit-box; -webkit-line-clamp: 2;
       -webkit-box-orient: vertical; overflow: hidden;
     }
-
     .brand-card-btn {
       display: inline-flex; align-items: center; gap: 6px;
       font-family: 'Oswald', sans-serif; font-size: 12px;
       font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
       padding: 6px 14px; border-radius: 4px; width: fit-content;
       border: 1px solid rgba(255,255,255,0.3);
-      backdrop-filter: blur(8px);
-      background: rgba(255,255,255,0.07);
-      color: white;
-      transition: background 0.2s, border-color 0.2s;
+      backdrop-filter: blur(8px); background: rgba(255,255,255,0.07);
+      color: white; transition: background 0.2s, border-color 0.2s;
     }
-    .brand-card:hover .brand-card-btn {
-      background: rgba(255,255,255,0.16);
-      border-color: rgba(255,255,255,0.55);
-    }
+    .brand-card:hover .brand-card-btn { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.55); }
 
     /* ═══════════════════════════════
        BRAND DETAIL SCREEN
     ═══════════════════════════════ */
-    .brand-hero {
-      position: relative; height: min(420px, 50vw);
-      overflow: hidden;
-    }
-
-    .brand-hero-bg {
-      position: absolute; inset: 0;
-      background-size: cover; background-position: center;
-    }
-
+    .brand-hero { position: relative; height: min(420px, 50vw); overflow: hidden; }
+    .brand-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
     .brand-hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(
-        105deg,
-        rgba(8,8,8,0.97) 0%,
-        rgba(8,8,8,0.78) 42%,
-        rgba(8,8,8,0.2) 75%,
-        transparent 100%
-      );
-      display: flex; align-items: center;
-      padding: 0 60px;
+      background: linear-gradient(105deg, rgba(8,8,8,0.97) 0%, rgba(8,8,8,0.78) 42%, rgba(8,8,8,0.2) 75%, transparent 100%);
+      display: flex; align-items: center; padding: 0 60px;
     }
-
     .brand-hero-content { max-width: 560px; }
-
-    .brand-hero-logo {
-      height: 64px; object-fit: contain; object-position: left;
-      margin-bottom: 22px;
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
-    }
-
+    .brand-hero-logo { height: 64px; object-fit: contain; object-position: left; margin-bottom: 22px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
     .brand-hero-tagline {
       font-family: 'Oswald', sans-serif;
-      font-size: clamp(17px, 2.2vw, 24px);
-      font-weight: 500; letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.88);
-      margin-bottom: 14px;
-      line-height: 1.3;
+      font-size: clamp(17px, 2.2vw, 24px); font-weight: 500; letter-spacing: 0.05em;
+      text-transform: uppercase; color: rgba(255,255,255,0.88); margin-bottom: 14px; line-height: 1.3;
     }
-
-    .brand-hero-desc {
-      font-size: 14px; color: rgba(255,255,255,0.62);
-      line-height: 1.75; max-width: 460px;
-    }
-
+    .brand-hero-desc { font-size: 14px; color: rgba(255,255,255,0.62); line-height: 1.75; max-width: 460px; }
     .brand-accent-bar { height: 3px; width: 100%; }
 
     /* ─── Products Section ─── */
-    .products-section {
-      padding: 40px 48px 72px;
-      max-width: 1440px;
-      margin: 0 auto;
-    }
-
+    .products-section { padding: 40px 48px 72px; max-width: 1440px; margin: 0 auto; }
     .products-header {
       display: flex; align-items: flex-start;
       justify-content: space-between; gap: 20px;
       margin-bottom: 28px; flex-wrap: wrap;
     }
-
     .products-title-row { display: flex; align-items: baseline; gap: 10px; }
-
-    .products-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: 26px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.05em;
-    }
-
-    .products-count {
-      font-size: 14px; color: var(--text3);
-      font-weight: 500;
-    }
-
+    .products-title { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+    .products-count { font-size: 14px; color: var(--text3); font-weight: 500; }
     .filter-wrap { display: flex; gap: 8px; flex-wrap: wrap; }
-
     .filter-chip {
       padding: 6px 14px; border-radius: 20px;
       border: 1px solid var(--border2);
       font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
       color: var(--text2); cursor: pointer;
       transition: all 0.18s; background: none;
-      font-family: 'Inter', sans-serif;
-      white-space: nowrap;
+      font-family: 'Inter', sans-serif; white-space: nowrap;
     }
     .filter-chip:hover { color: var(--text); border-color: #555; }
     .filter-chip.on { background: color-mix(in srgb, var(--chip-color) 10%, transparent); border-color: var(--chip-color); color: var(--chip-color); }
 
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-    }
-
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
     .prod-card {
       background: var(--bg3); border: 1px solid var(--border);
       border-radius: 12px; overflow: hidden; cursor: pointer;
@@ -312,101 +204,102 @@
     }
     .prod-card:hover { transform: translateY(-4px); border-color: var(--border2); }
     .prod-card.hidden { display: none; }
-
     .prod-thumb {
       width: 100%; aspect-ratio: 4/3;
       display: flex; align-items: center; justify-content: center;
       position: relative; overflow: hidden;
     }
-
-    .prod-thumb-logo {
-      height: 32px; opacity: 0.28; object-fit: contain;
-      position: relative; z-index: 1;
-      transition: opacity 0.2s;
-    }
+    .prod-thumb-logo { height: 32px; opacity: 0.28; object-fit: contain; position: relative; z-index: 1; transition: opacity 0.2s; }
     .prod-card:hover .prod-thumb-logo { opacity: 0.45; }
-
     .prod-body { padding: 14px 14px 16px; }
-
-    .prod-name {
-      font-family: 'Oswald', sans-serif; font-size: 15px;
-      font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.03em; line-height: 1.25;
-      margin-bottom: 4px;
-    }
-
+    .prod-name { font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.25; margin-bottom: 4px; }
     .prod-sub { font-size: 11px; color: var(--text2); margin-bottom: 10px; }
-
     .prod-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-
-    .ptag {
-      font-size: 10px; font-weight: 500;
-      padding: 3px 8px; border-radius: 10px;
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.5);
-    }
-
-    .no-results {
-      grid-column: 1/-1;
-      text-align: center; padding: 60px 20px;
-      color: var(--text3); font-size: 15px;
-    }
+    .ptag { font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 10px; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+    .no-results { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--text3); font-size: 15px; }
 
     /* ═══════════════════════════════
        MODAL
     ═══════════════════════════════ */
     .modal-backdrop {
       position: fixed; inset: 0; z-index: 500;
-      background: rgba(0,0,0,0.82);
-      backdrop-filter: blur(8px);
-      display: none; align-items: center; justify-content: center;
-      padding: 24px;
+      background: rgba(0,0,0,0.82); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; padding: 24px;
     }
     .modal-backdrop.open { display: flex; }
-
     .modal {
       background: var(--bg2); border: 1px solid var(--border2);
-      border-radius: 18px; max-width: 660px; width: 100%;
-      max-height: 88vh; overflow-y: auto;
-      position: relative;
+      border-radius: 18px; max-width: 700px; width: 100%;
+      max-height: 90vh; overflow-y: auto; position: relative;
       animation: mIn 0.22s cubic-bezier(0.2,0,0.1,1);
       scrollbar-width: thin; scrollbar-color: var(--border2) transparent;
     }
-
     @keyframes mIn {
       from { opacity: 0; transform: scale(0.94) translateY(12px); }
-      to   { opacity: 1; transform: scale(1)    translateY(0);    }
+      to   { opacity: 1; transform: scale(1)    translateY(0); }
     }
-
     .modal::-webkit-scrollbar { width: 5px; }
     .modal::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-
     .modal-close {
       position: absolute; top: 14px; right: 14px; z-index: 10;
       width: 34px; height: 34px; border-radius: 50%;
       background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.12);
       color: rgba(255,255,255,0.8); font-size: 16px;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.18s;
-      line-height: 1;
+      transition: background 0.18s; line-height: 1;
     }
     .modal-close:hover { background: rgba(255,255,255,0.12); }
 
-    .modal-img-wrap {
-      width: 100%; height: 240px; border-radius: 16px 16px 0 0;
+    /* ── Modal image area ── */
+    .modal-img-area { position: relative; width: 100%; }
+
+    .modal-main-img {
+      width: 100%; height: 260px; border-radius: 16px 16px 0 0;
       overflow: hidden; position: relative;
       display: flex; align-items: center; justify-content: center;
     }
+    .modal-img-logo { height: 64px; opacity: 0.35; object-fit: contain; position: relative; z-index: 1; }
 
-    .modal-img-logo {
-      height: 64px; opacity: 0.35; object-fit: contain;
-      position: relative; z-index: 1;
+    /* ── Size selector ── */
+    .size-selector {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding: 12px 16px 0;
     }
+    .size-selector:empty { display: none; }
+    .size-btn {
+      padding: 6px 16px; border-radius: 20px; cursor: pointer;
+      border: 1px solid var(--border2);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--text2); background: none;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.16s;
+    }
+    .size-btn:hover { border-color: #555; color: var(--text); }
+    .size-btn.on { background: color-mix(in srgb, var(--size-color) 12%, transparent); border-color: var(--size-color); color: var(--size-color); }
 
-    .modal-accent { height: 3px; width: 100%; }
+    /* ── Secondary images carousel ── */
+    .sec-images {
+      display: flex; gap: 8px; overflow-x: auto;
+      padding: 10px 16px 0;
+      scrollbar-width: none;
+    }
+    .sec-images::-webkit-scrollbar { display: none; }
+    .sec-images:empty { display: none; }
+    .sec-thumb {
+      flex-shrink: 0; width: 72px; height: 72px; border-radius: 8px;
+      overflow: hidden; cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.16s, opacity 0.16s;
+      background-size: cover; background-position: center;
+      opacity: 0.6;
+    }
+    .sec-thumb:hover { opacity: 0.9; }
+    .sec-thumb.active { border-color: var(--size-color); opacity: 1; }
 
-    .modal-body { padding: 26px 30px 32px; }
+    .modal-accent { height: 3px; width: 100%; margin-top: 12px; }
 
+    /* ── Modal body ── */
+    .modal-body { padding: 22px 30px 32px; }
     .modal-brand-badge {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
@@ -416,44 +309,15 @@
       color: var(--badge-color);
       border: 1px solid color-mix(in srgb, var(--badge-color) 20%, transparent);
     }
-
-    .modal-name {
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(24px, 4vw, 32px); font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.05;
-      margin-bottom: 6px;
-    }
-
+    .modal-name { font-family: 'Oswald', sans-serif; font-size: clamp(22px, 4vw, 30px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.05; margin-bottom: 6px; }
     .modal-sub { font-size: 14px; color: var(--text2); margin-bottom: 18px; }
-
     .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
-
-    .mtag {
-      font-size: 12px; padding: 5px 12px; border-radius: 16px;
-      border: 1px solid var(--border2); color: var(--text2); font-weight: 500;
-    }
-
+    .mtag { font-size: 12px; padding: 5px 12px; border-radius: 16px; border: 1px solid var(--border2); color: var(--text2); font-weight: 500; }
     .modal-divider { height: 1px; background: var(--border); margin: 20px 0; }
-
-    .modal-desc {
-      font-size: 14px; line-height: 1.82; color: var(--text2);
-      margin-bottom: 24px;
-    }
-
-    .modal-details-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
-    }
-
-    .mdetail {
-      background: rgba(255,255,255,0.025); border: 1px solid var(--border);
-      border-radius: 8px; padding: 12px 14px;
-    }
-
-    .mdetail-label {
-      font-size: 10px; color: var(--text3); font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px;
-    }
-
+    .modal-desc { font-size: 14px; line-height: 1.82; color: var(--text2); margin-bottom: 24px; }
+    .modal-details-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .mdetail { background: rgba(255,255,255,0.025); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+    .mdetail-label { font-size: 10px; color: var(--text3); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
     .mdetail-value { font-size: 14px; font-weight: 500; }
 
     /* ─── Scrollbar global ─── */
@@ -512,7 +376,6 @@
     </div>
   </div>
   <div class="brand-accent-bar" id="detailAccentBar"></div>
-
   <div class="products-section">
     <div class="products-header">
       <div class="products-title-row">
@@ -531,7 +394,11 @@
 <div class="modal-backdrop" id="modalBackdrop" onclick="backdropClick(event)">
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-img-wrap" id="modalImgWrap"></div>
+    <div class="modal-img-area">
+      <div class="modal-main-img" id="modalMainImg"></div>
+      <div class="size-selector" id="sizeSelector"></div>
+      <div class="sec-images" id="secImages"></div>
+    </div>
     <div class="modal-accent" id="modalAccent"></div>
     <div class="modal-body">
       <div class="modal-brand-badge" id="modalBadge"></div>
@@ -541,8 +408,8 @@
       <div class="modal-divider"></div>
       <p class="modal-desc" id="modalDesc"></p>
       <div class="modal-details-grid" id="modalDetails"></div>
+    </div>
   </div>
-</div>
 </div>
 
 <script>
@@ -566,6 +433,10 @@ async function loadAppData() {
 ════════════════════════════ */
 let activeBrand = null;
 let activeFilter = 'All';
+let modalProduct = null;
+let modalBrand = null;
+let activeSizeIdx = 0;
+let activeImgSrc = '';
 
 /* ════════════════════════════
    INIT
@@ -574,24 +445,24 @@ async function init() {
   appData = await loadAppData();
   if (!appData) return;
 
-  const settings = appData.sections.app_settings;
-  document.documentElement.style.setProperty('--bg', settings.bg.value);
-  document.documentElement.style.setProperty('--bg2', settings.bg2.value);
-  document.documentElement.style.setProperty('--bg3', settings.bg3.value);
-  document.documentElement.style.setProperty('--bg4', settings.bg4.value);
-  document.documentElement.style.setProperty('--border', settings.border.value);
-  document.documentElement.style.setProperty('--border2', settings.border2.value);
-  document.documentElement.style.setProperty('--text', settings.text.value);
-  document.documentElement.style.setProperty('--text2', settings.text2.value);
-  document.documentElement.style.setProperty('--text3', settings.text3.value);
-  document.documentElement.style.setProperty('--green', settings.green.value);
-  document.documentElement.style.setProperty('--green2', settings.green2.value);
+  const s = appData.sections.app_settings;
+  document.documentElement.style.setProperty('--bg',      s.bg.value);
+  document.documentElement.style.setProperty('--bg2',     s.bg2.value);
+  document.documentElement.style.setProperty('--bg3',     s.bg3.value);
+  document.documentElement.style.setProperty('--bg4',     s.bg4.value);
+  document.documentElement.style.setProperty('--border',  s.border.value);
+  document.documentElement.style.setProperty('--border2', s.border2.value);
+  document.documentElement.style.setProperty('--text',    s.text.value);
+  document.documentElement.style.setProperty('--text2',   s.text2.value);
+  document.documentElement.style.setProperty('--text3',   s.text3.value);
+  document.documentElement.style.setProperty('--green',   s.green.value);
+  document.documentElement.style.setProperty('--green2',  s.green2.value);
 
   const sf = appData.sections.storefront;
   document.querySelector('.brands-hero-eyebrow').textContent = sf.company_name.value;
-  document.querySelector('.brands-hero h1').textContent = sf.hero_title.value;
-  document.querySelector('.brands-hero p').textContent = sf.hero_desc.value;
-  document.getElementById('hdrLogo').src = sf.company_logo_white.value;
+  document.querySelector('.brands-hero h1').textContent      = sf.hero_title.value;
+  document.querySelector('.brands-hero p').textContent       = sf.hero_desc.value;
+  document.getElementById('hdrLogo').src                     = sf.company_logo_white.value;
 
   renderBrands();
   document.getElementById('app-container').classList.add('loaded');
@@ -604,14 +475,25 @@ document.addEventListener('DOMContentLoaded', init);
 ════════════════════════════ */
 function renderBrands() {
   const brands = appData.sections.brands.value;
-  const grid = document.getElementById('brandsGrid');
+  const grid   = document.getElementById('brandsGrid');
   grid.innerHTML = brands.map((b, idx) => `
-    <div class="brand-card" data-brand="${b.id}" data-bind-style="--brand-color:brands.${idx}.color" style="--brand-color:${b.color}" onclick="openBrand('${b.id}')">
-      <div class="brand-card-bg" data-bind-bg-image="brands.${idx}.hero" style="background-image:url('${b.hero}')"></div>
+    <div class="brand-card" data-brand="${b.id}"
+         data-bind-style="--brand-color:brands.${idx}.color"
+         style="--brand-color:${b.color}"
+         onclick="openBrand('${b.id}')">
+      <div class="brand-card-bg"
+           data-bind-bg-image="brands.${idx}.hero"
+           style="background-image:url('${b.hero}')"></div>
       <div class="brand-card-overlay">
-        <img src="${b.logoW}" alt="${b.name}" class="brand-card-logo" data-bind-src="brands.${idx}.logoW" data-bind-attr="alt:brands.${idx}.name">
-        <p class="brand-card-tagline" data-bind-text="brands.${idx}.tagline">${b.tagline}</p>
-        <div class="brand-card-btn">Explore <span data-bind-text="brands.${idx}.name">${b.name}</span> <span style="opacity:.7">›</span></div>
+        <img src="${b.logoW}" alt="${b.name}" class="brand-card-logo"
+             data-bind-src="brands.${idx}.logoW"
+             data-bind-attr="alt:brands.${idx}.name">
+        <p class="brand-card-tagline"
+           data-bind-text="brands.${idx}.tagline">${b.tagline}</p>
+        <div class="brand-card-btn">
+          Explore <span data-bind-text="brands.${idx}.name">${b.name}</span>
+          <span style="opacity:.7">›</span>
+        </div>
       </div>
     </div>
   `).join('');
@@ -623,7 +505,7 @@ function renderBrands() {
 function openBrand(id) {
   const b = appData.sections.brands.value.find(x => x.id === id);
   if (!b) return;
-  activeBrand = b;
+  activeBrand  = b;
   activeFilter = 'All';
   const idx = appData.sections.brands.value.indexOf(b);
 
@@ -634,7 +516,7 @@ function openBrand(id) {
   const detailLogo = document.getElementById('detailLogo');
   detailLogo.src = b.logoW;
   detailLogo.alt = b.name;
-  detailLogo.setAttribute('data-bind-src', `brands.${idx}.logoW`);
+  detailLogo.setAttribute('data-bind-src',  `brands.${idx}.logoW`);
   detailLogo.setAttribute('data-bind-attr', `alt:brands.${idx}.name`);
 
   const detailTagline = document.getElementById('detailTagline');
@@ -645,15 +527,15 @@ function openBrand(id) {
   detailDesc.textContent = b.desc;
   detailDesc.setAttribute('data-bind-text', `brands.${idx}.desc`);
 
-  const detailAccentBar = document.getElementById('detailAccentBar');
-  detailAccentBar.style.background = b.color;
-  detailAccentBar.setAttribute('data-bind-bg-color', `brands.${idx}.color`);
+  const bar = document.getElementById('detailAccentBar');
+  bar.style.background = b.color;
+  bar.setAttribute('data-bind-bg-color', `brands.${idx}.color`);
 
   document.getElementById('backBtn').classList.add('show');
 
   const products = appData.sections.products.value
-      .map((p, pIdx) => ({ ...p, _idx: pIdx }))
-      .filter(p => p.brand === b.id);
+    .map((p, pIdx) => ({ ...p, _idx: pIdx }))
+    .filter(p => p.brand === b.id);
 
   buildFilters(products);
   renderProducts(products);
@@ -673,18 +555,28 @@ function showBrands() {
 
 /* ════════════════════════════
    FILTERS
+   Build chips from product_type, lineage, and tags combined
 ════════════════════════════ */
 function buildFilters(products) {
-  const allTags = ['All', ...new Set(products.flatMap(p => (p.tags || '').split(',').map(t => t.trim()).filter(Boolean)))];
+  const filterValues = new Set();
+  products.forEach(p => {
+    if (p.product_type) filterValues.add(p.product_type.trim());
+    if (p.lineage) p.lineage.split(',').forEach(v => {
+      const t = v.trim();
+      if (t && t !== p.product_type) filterValues.add(t);
+    });
+    if (p.tags) p.tags.split(',').forEach(t => { const v = t.trim(); if (v) filterValues.add(v); });
+  });
+  const allTags = ['All', ...filterValues];
   const color = activeBrand.color;
-  const bIdx = appData.sections.brands.value.indexOf(activeBrand);
-  const wrap = document.getElementById('filterWrap');
+  const bIdx  = appData.sections.brands.value.indexOf(activeBrand);
+  const wrap  = document.getElementById('filterWrap');
   wrap.innerHTML = allTags.map(t => `
     <button class="filter-chip ${t === 'All' ? 'on' : ''}"
             data-tag="${t}"
             style="${t === 'All' ? `--chip-color:${color}` : ''}"
             ${t === 'All' ? `data-bind-style="--chip-color:brands.${bIdx}.color"` : ''}
-            onclick="applyFilter('${t}',this)">
+            onclick="applyFilter('${t.replace(/'/g,"\\'")}',this)">
       ${t}
     </button>
   `).join('');
@@ -693,7 +585,7 @@ function buildFilters(products) {
 function applyFilter(tag, btn) {
   activeFilter = tag;
   const color = activeBrand.color;
-  const bIdx = appData.sections.brands.value.indexOf(activeBrand);
+  const bIdx  = appData.sections.brands.value.indexOf(activeBrand);
 
   document.querySelectorAll('.filter-chip').forEach(c => {
     c.classList.remove('on');
@@ -706,15 +598,14 @@ function applyFilter(tag, btn) {
 
   let shown = 0;
   document.querySelectorAll('.prod-card').forEach(card => {
-    const tags = (card.dataset.tags || '').split(',').map(t => t.trim());
-    if (tag === 'All' || tags.includes(tag)) {
+    const allVals = (card.dataset.filtervals || '').split('|');
+    if (tag === 'All' || allVals.includes(tag)) {
       card.classList.remove('hidden');
       shown++;
     } else {
       card.classList.add('hidden');
     }
   });
-
   document.getElementById('productsCount').textContent = `${shown} item${shown !== 1 ? 's' : ''}`;
 }
 
@@ -723,27 +614,47 @@ function applyFilter(tag, btn) {
 ════════════════════════════ */
 function renderProducts(products) {
   const grid = document.getElementById('productsGrid');
-  const b = activeBrand;
+  const b    = activeBrand;
   const bIdx = appData.sections.brands.value.indexOf(b);
 
   grid.innerHTML = products.map(p => {
     const idx = p._idx;
-    const tagArray = (p.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+
+    // Build combined filter values for this card
+    const filterVals = new Set();
+    if (p.product_type) filterVals.add(p.product_type.trim());
+    if (p.lineage) p.lineage.split(',').forEach(v => { const t = v.trim(); if (t) filterVals.add(t); });
+    if (p.tags) p.tags.split(',').forEach(t => { const v = t.trim(); if (v) filterVals.add(v); });
+    const filterStr = [...filterVals].join('|');
+
+    // Tag pills: product_type first, then lineage, then up to 2 extra tags
+    const pills = [];
+    if (p.product_type) pills.push(p.product_type);
+    if (p.lineage && p.lineage !== p.product_type) pills.push(p.lineage);
+    if (p.tags) p.tags.split(',').map(t => t.trim()).filter(Boolean).slice(0, 2).forEach(t => {
+      if (!pills.includes(t)) pills.push(t);
+    });
+
+    const imgStyle = p.image
+      ? `background:url('${p.image}') center/contain no-repeat; background-color:var(--bg4)`
+      : `background:${p.grad}`;
+
     return `
-    <div class="prod-card" data-id="${p.id}" data-tags="${p.tags}"
+    <div class="prod-card" data-id="${p.id}" data-filtervals="${filterStr}"
          onclick="openProduct('${p.id}')">
-      <div class="prod-thumb" data-bind-bg-image="products.${idx}.image" style="${p.image ? `background:url('${p.image}') center/cover` : `background:${p.grad}`}">
+      <div class="prod-thumb" data-bind-bg-image="products.${idx}.image"
+           style="${imgStyle}">
         ${p.image ? '' : `<img src="${b.logoW}" alt="${b.name}" class="prod-thumb-logo" data-bind-src="brands.${bIdx}.logoW" data-bind-attr="alt:brands.${bIdx}.name">`}
       </div>
       <div class="prod-body">
         <div class="prod-name" data-bind-text="products.${idx}.name">${p.name}</div>
         <div class="prod-sub" data-bind-text="products.${idx}.sub">${p.sub}</div>
         <div class="prod-tags">
-          ${tagArray.slice(0,4).map(t => `<span class="ptag">${t}</span>`).join('')}
+          ${pills.slice(0, 4).map(t => `<span class="ptag">${t}</span>`).join('')}
         </div>
       </div>
-    </div>
-  `}).join('');
+    </div>`;
+  }).join('');
 
   document.getElementById('productsCount').textContent =
     `${products.length} item${products.length !== 1 ? 's' : ''}`;
@@ -759,24 +670,23 @@ function openProduct(id) {
   const pIdx = appData.sections.products.value.indexOf(p);
   const bIdx = appData.sections.brands.value.indexOf(b);
 
-  // image
-  document.getElementById('modalImgWrap').innerHTML = `
-    <div data-bind-bg-image="products.${pIdx}.image" style="position:absolute;inset:0;${p.image ? `background:url('${p.image}') center/cover` : `background:${p.grad}`}"></div>
-    ${p.image ? '' : `<img src="${b.logoW}" alt="${b.name}" data-bind-src="brands.${bIdx}.logoW" data-bind-attr="alt:brands.${bIdx}.name" class="modal-img-logo">`}
-  `;
-  document.getElementById('modalImgWrap').style.position = 'relative';
+  modalProduct  = p;
+  modalBrand    = b;
+  activeSizeIdx = 0;
 
-  const modalAccent = document.getElementById('modalAccent');
-  modalAccent.style.background = b.color;
-  modalAccent.setAttribute('data-bind-bg-color', `brands.${bIdx}.color`);
+  // ── Accent bar ──
+  const bar = document.getElementById('modalAccent');
+  bar.style.background = b.color;
+  bar.setAttribute('data-bind-bg-color', `brands.${bIdx}.color`);
 
-  // badge
+  // ── Brand badge ──
   const badge = document.getElementById('modalBadge');
   badge.textContent = b.name;
   badge.style.setProperty('--badge-color', b.color);
-  badge.setAttribute('data-bind-text', `brands.${bIdx}.name`);
+  badge.setAttribute('data-bind-text',  `brands.${bIdx}.name`);
   badge.setAttribute('data-bind-style', `--badge-color:brands.${bIdx}.color`);
 
+  // ── Name / sub / desc ──
   const mName = document.getElementById('modalName');
   mName.textContent = p.name;
   mName.setAttribute('data-bind-text', `products.${pIdx}.name`);
@@ -789,30 +699,144 @@ function openProduct(id) {
   mDesc.textContent = p.desc;
   mDesc.setAttribute('data-bind-text', `products.${pIdx}.desc`);
 
-  const tagArray = (p.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+  // ── Tags: pull from product_type, lineage, potency, and tags field ──
+  const tagSet = new Set();
+  if (p.product_type) tagSet.add(p.product_type);
+  if (p.lineage && p.lineage !== p.product_type) tagSet.add(p.lineage);
+  if (p.potency) tagSet.add(p.potency);
+  if (p.tags) p.tags.split(',').map(t => t.trim()).filter(Boolean).forEach(t => tagSet.add(t));
   document.getElementById('modalTags').innerHTML =
-    tagArray.map(t => `<span class="mtag">${t}</span>`).join('');
+    [...tagSet].map(t => `<span class="mtag">${t}</span>`).join('');
 
+  // ── Detail cards: 3 defined + 2 custom ──
   const details = [];
+  if (p.product_type) details.push({ label: 'Type',            value: p.product_type, lPath: `products.${pIdx}.product_type`, vPath: `products.${pIdx}.product_type` });
+  if (p.lineage)      details.push({ label: 'Lineage',         value: p.lineage,      lPath: null,                            vPath: `products.${pIdx}.lineage`       });
+  if (p.potency)      details.push({ label: 'THC / Potency',   value: p.potency,      lPath: null,                            vPath: `products.${pIdx}.potency`       });
   if (p.detail_1_label) details.push({ label: p.detail_1_label, value: p.detail_1_value, lPath: `products.${pIdx}.detail_1_label`, vPath: `products.${pIdx}.detail_1_value` });
   if (p.detail_2_label) details.push({ label: p.detail_2_label, value: p.detail_2_value, lPath: `products.${pIdx}.detail_2_label`, vPath: `products.${pIdx}.detail_2_value` });
-  if (p.detail_3_label) details.push({ label: p.detail_3_label, value: p.detail_3_value, lPath: `products.${pIdx}.detail_3_label`, vPath: `products.${pIdx}.detail_3_value` });
-  if (p.detail_4_label) details.push({ label: p.detail_4_label, value: p.detail_4_value, lPath: `products.${pIdx}.detail_4_label`, vPath: `products.${pIdx}.detail_4_value` });
 
-  document.getElementById('modalDetails').innerHTML =
-    details.map(d => `
-      <div class="mdetail">
-        <div class="mdetail-label" data-bind-text="${d.lPath}">${d.label}</div>
-        <div class="mdetail-value" data-bind-text="${d.vPath}">${d.value}</div>
-      </div>
-    `).join('');
+  document.getElementById('modalDetails').innerHTML = details.map(d => `
+    <div class="mdetail">
+      <div class="mdetail-label" ${d.lPath ? `data-bind-text="${d.lPath}"` : ''}>${d.label}</div>
+      <div class="mdetail-value" ${d.vPath ? `data-bind-text="${d.vPath}"` : ''}>${d.value}</div>
+    </div>
+  `).join('');
+
+  // ── Sizes & secondary images ──
+  const sizes  = p.sizes?.value || [];
+  const secImgs = p.secondary_images?.value || [];
+
+  buildModalImages(p, b, pIdx, bIdx, sizes, secImgs);
 
   document.getElementById('modal').scrollTop = 0;
   document.getElementById('modalBackdrop').classList.add('open');
 }
 
+function buildModalImages(p, b, pIdx, bIdx, sizes, secImgs) {
+  const color = b.color;
+
+  // ── Main image: default to first size image, fallback to product image ──
+  const firstSizeImg = sizes.length > 0 ? sizes[0].image : null;
+  activeImgSrc = firstSizeImg || p.image || '';
+  setModalMainImg(activeImgSrc, p, b, bIdx);
+
+  // ── Size selector ──
+  const sel = document.getElementById('sizeSelector');
+  if (sizes.length > 1) {
+    sel.innerHTML = sizes.map((sz, i) => `
+      <button class="size-btn ${i === 0 ? 'on' : ''}"
+              style="${i === 0 ? `--size-color:${color}` : ''}"
+              data-idx="${i}"
+              onclick="selectSize(${i})">
+        ${sz.size_label}
+      </button>
+    `).join('');
+  } else {
+    sel.innerHTML = '';
+  }
+
+  // ── Secondary images strip ──
+  const strip = document.getElementById('secImages');
+  if (secImgs.length > 0) {
+    strip.innerHTML = secImgs.map((img, i) => `
+      <div class="sec-thumb"
+           style="background-image:url('${img.image}')"
+           data-src="${img.image}"
+           onclick="selectSecImg('${img.image}', this)">
+      </div>
+    `).join('');
+  } else {
+    strip.innerHTML = '';
+  }
+}
+
+function setModalMainImg(src, p, b, bIdx) {
+  const wrap = document.getElementById('modalMainImg');
+  if (src) {
+    wrap.innerHTML = `<div style="position:absolute;inset:0;background:url('${src}') center/contain no-repeat;background-color:var(--bg4)"></div>`;
+  } else {
+    wrap.innerHTML = `
+      <div style="position:absolute;inset:0;background:${p.grad}"></div>
+      <img src="${b.logoW}" alt="${b.name}" class="modal-img-logo"
+           data-bind-src="brands.${bIdx}.logoW"
+           data-bind-attr="alt:brands.${bIdx}.name">
+    `;
+  }
+  wrap.style.position = 'relative';
+}
+
+function selectSize(idx) {
+  const sizes  = modalProduct.sizes?.value || [];
+  const b      = modalBrand;
+  const bIdx   = appData.sections.brands.value.indexOf(b);
+  const color  = b.color;
+  const p      = modalProduct;
+
+  activeSizeIdx = idx;
+  const sz = sizes[idx];
+  activeImgSrc = sz.image || p.image || '';
+
+  setModalMainImg(activeImgSrc, p, b, bIdx);
+
+  // Clear secondary image active state when switching sizes
+  document.querySelectorAll('.sec-thumb').forEach(t => t.classList.remove('active'));
+
+  // Update size button styles
+  document.querySelectorAll('.size-btn').forEach((btn, i) => {
+    btn.classList.toggle('on', i === idx);
+    if (i === idx) {
+      btn.style.setProperty('--size-color', color);
+    } else {
+      btn.style.cssText = '';
+    }
+  });
+}
+
+function selectSecImg(src, thumbEl) {
+  const b    = modalBrand;
+  const bIdx = appData.sections.brands.value.indexOf(b);
+  const p    = modalProduct;
+
+  activeImgSrc = src;
+  setModalMainImg(src, p, b, bIdx);
+
+  // Update thumbnail active state
+  document.querySelectorAll('.sec-thumb').forEach(t => t.classList.remove('active'));
+  thumbEl.classList.add('active');
+  thumbEl.style.setProperty('--size-color', b.color);
+
+  // Clear size selector active when a secondary image is chosen
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.classList.remove('on');
+    btn.style.cssText = '';
+  });
+}
+
 function closeModal() {
   document.getElementById('modalBackdrop').classList.remove('open');
+  modalProduct = null;
+  modalBrand   = null;
 }
 
 function backdropClick(e) {
