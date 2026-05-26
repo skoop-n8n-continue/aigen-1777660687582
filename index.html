@@ -724,8 +724,8 @@ function openProduct(id) {
   `).join('');
 
   // ── Sizes & secondary images ──
-  const sizes  = p.sizes?.value || [];
-  const secImgs = p.secondary_images?.value || [];
+  const sizes  = p.sizes || [];
+  const secImgs = p.secondary_images || [];
 
   buildModalImages(p, b, pIdx, bIdx, sizes, secImgs);
 
@@ -787,7 +787,7 @@ function setModalMainImg(src, p, b, bIdx) {
 }
 
 function selectSize(idx) {
-  const sizes  = modalProduct.sizes?.value || [];
+  const sizes  = modalProduct.sizes || [];
   const b      = modalBrand;
   const bIdx   = appData.sections.brands.value.indexOf(b);
   const color  = b.color;

@@ -158,32 +158,14 @@
           "detail_2_label": "Servings",
           "detail_2_value": "10 per bottle",
           "tags": "Tincture, Wellness, CBD, Calm",
-          "sizes": {
-            "type": "collection",
-            "label": "Sizes",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "size_label": { "type": "text", "label": "Size" },
-              "image": { "type": "file", "label": "Size Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } }
-            },
-            "value": [
-              { "id": "size_ca1b2c", "size_label": "30mL (100mg THC)", "image": "assets/products/size_ca1b2c_image_c4d5e6.png" }
-            ]
-          },
-          "secondary_images": {
-            "type": "collection",
-            "label": "Secondary Images",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "image": { "type": "file", "label": "Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } },
-              "caption": { "type": "text", "label": "Caption (Optional)" }
-            },
-            "value": [
-              { "id": "img_dm1a2b", "image": "assets/products/img_dm1a2b_image_f7g8h9.png", "caption": "" },
-              { "id": "img_dm3c4d", "image": "assets/products/img_dm3c4d_image_i1j2k3.png", "caption": "" },
-              { "id": "img_dm5e6f", "image": "assets/products/img_dm5e6f_image_l4m5n6.png", "caption": "" }
-            ]
-          }
+          "sizes": [
+            { "id": "size_ca1b2c", "size_label": "30mL (100mg THC)", "image": "assets/products/size_ca1b2c_image_c4d5e6.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_dm1a2b", "image": "assets/products/img_dm1a2b_image_f7g8h9.png", "caption": "" },
+            { "id": "img_dm3c4d", "image": "assets/products/img_dm3c4d_image_i1j2k3.png", "caption": "" },
+            { "id": "img_dm5e6f", "image": "assets/products/img_dm5e6f_image_l4m5n6.png", "caption": "" }
+          ]
         },
         {
           "id": "prod_fc3d4e",
@@ -201,36 +183,18 @@
           "detail_2_label": "",
           "detail_2_value": "",
           "tags": "Flower, Hybrid, Craft",
-          "sizes": {
-            "type": "collection",
-            "label": "Sizes",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "size_label": { "type": "text", "label": "Size" },
-              "image": { "type": "file", "label": "Size Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } }
-            },
-            "value": [
-              { "id": "size_cc1d2e", "size_label": "1.0g", "image": "assets/products/size_cc1d2e_image_o7p8q9.png" },
-              { "id": "size_cc3f4g", "size_label": "2.0g", "image": "assets/products/size_cc3f4g_image_r1s2t3.png" },
-              { "id": "size_cc5h6i", "size_label": "3.5g", "image": "assets/products/size_cc5h6i_image_u4v5w6.png" },
-              { "id": "size_cc7j8k", "size_label": "7.0g", "image": "assets/products/size_cc7j8k_image_x7y8z9.png" },
-              { "id": "size_cc9l0m", "size_label": "14.0g", "image": "assets/products/size_cc9l0m_image_a1b2c3.png" }
-            ]
-          },
-          "secondary_images": {
-            "type": "collection",
-            "label": "Secondary Images",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "image": { "type": "file", "label": "Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } },
-              "caption": { "type": "text", "label": "Caption (Optional)" }
-            },
-            "value": [
-              { "id": "img_fm1a2b", "image": "assets/products/img_fm1a2b_image_d4e5f6.png", "caption": "" },
-              { "id": "img_fm3c4d", "image": "assets/products/img_fm3c4d_image_g7h8i9.png", "caption": "" },
-              { "id": "img_fm5e6f", "image": "assets/products/img_fm5e6f_image_j1k2l3.png", "caption": "" }
-            ]
-          }
+          "sizes": [
+            { "id": "size_cc1d2e", "size_label": "1.0g", "image": "assets/products/size_cc1d2e_image_o7p8q9.png" },
+            { "id": "size_cc3f4g", "size_label": "2.0g", "image": "assets/products/size_cc3f4g_image_r1s2t3.png" },
+            { "id": "size_cc5h6i", "size_label": "3.5g", "image": "assets/products/size_cc5h6i_image_u4v5w6.png" },
+            { "id": "size_cc7j8k", "size_label": "7.0g", "image": "assets/products/size_cc7j8k_image_x7y8z9.png" },
+            { "id": "size_cc9l0m", "size_label": "14.0g", "image": "assets/products/size_cc9l0m_image_a1b2c3.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_fm1a2b", "image": "assets/products/img_fm1a2b_image_d4e5f6.png", "caption": "" },
+            { "id": "img_fm3c4d", "image": "assets/products/img_fm3c4d_image_g7h8i9.png", "caption": "" },
+            { "id": "img_fm5e6f", "image": "assets/products/img_fm5e6f_image_j1k2l3.png", "caption": "" }
+          ]
         },
         {
           "id": "prod_fo5g6h",
@@ -248,35 +212,17 @@
           "detail_2_label": "",
           "detail_2_value": "",
           "tags": "Pre-Roll, OG, Uninfused",
-          "sizes": {
-            "type": "collection",
-            "label": "Sizes",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "size_label": { "type": "text", "label": "Size" },
-              "image": { "type": "file", "label": "Size Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } }
-            },
-            "value": [
-              { "id": "size_fo1n2o", "size_label": "1-Pack", "image": "assets/products/size_fo1n2o_image_m4n5o6.png" },
-              { "id": "size_fo3p4q", "size_label": "2-Pack", "image": "assets/products/size_fo3p4q_image_p7q8r9.png" },
-              { "id": "size_fo5r6s", "size_label": "3-Pack", "image": "assets/products/size_fo5r6s_image_s1t2u3.png" },
-              { "id": "size_fo7t8u", "size_label": "8-Pack Minis", "image": "assets/products/size_fo7t8u_image_v4w5x6.png" }
-            ]
-          },
-          "secondary_images": {
-            "type": "collection",
-            "label": "Secondary Images",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "image": { "type": "file", "label": "Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } },
-              "caption": { "type": "text", "label": "Caption (Optional)" }
-            },
-            "value": [
-              { "id": "img_fy1a2b", "image": "assets/products/img_fy1a2b_image_y7z8a9.png", "caption": "" },
-              { "id": "img_fy3c4d", "image": "assets/products/img_fy3c4d_image_b1c2d3.png", "caption": "" },
-              { "id": "img_fy5e6f", "image": "assets/products/img_fy5e6f_image_e4f5g6.png", "caption": "" }
-            ]
-          }
+          "sizes": [
+            { "id": "size_fo1n2o", "size_label": "1-Pack", "image": "assets/products/size_fo1n2o_image_m4n5o6.png" },
+            { "id": "size_fo3p4q", "size_label": "2-Pack", "image": "assets/products/size_fo3p4q_image_p7q8r9.png" },
+            { "id": "size_fo5r6s", "size_label": "3-Pack", "image": "assets/products/size_fo5r6s_image_s1t2u3.png" },
+            { "id": "size_fo7t8u", "size_label": "8-Pack Minis", "image": "assets/products/size_fo7t8u_image_v4w5x6.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_fy1a2b", "image": "assets/products/img_fy1a2b_image_y7z8a9.png", "caption": "" },
+            { "id": "img_fy3c4d", "image": "assets/products/img_fy3c4d_image_b1c2d3.png", "caption": "" },
+            { "id": "img_fy5e6f", "image": "assets/products/img_fy5e6f_image_e4f5g6.png", "caption": "" }
+          ]
         },
         {
           "id": "prod_rp7i8j",
@@ -294,32 +240,14 @@
           "detail_2_label": "Format",
           "detail_2_value": "Macro Gummy",
           "tags": "Edible, Gummy, Pineapple, Mighty Rayne",
-          "sizes": {
-            "type": "collection",
-            "label": "Sizes",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "size_label": { "type": "text", "label": "Size" },
-              "image": { "type": "file", "label": "Size Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } }
-            },
-            "value": [
-              { "id": "size_rp1v2w", "size_label": "25mg THC", "image": "assets/products/size_rp1v2w_image_h7i8j9.png" },
-              { "id": "size_rp3x4y", "size_label": "100mg THC", "image": "assets/products/size_rp3x4y_image_k1l2m3.png" }
-            ]
-          },
-          "secondary_images": {
-            "type": "collection",
-            "label": "Secondary Images",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "image": { "type": "file", "label": "Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } },
-              "caption": { "type": "text", "label": "Caption (Optional)" }
-            },
-            "value": [
-              { "id": "img_ra1a2b", "image": "assets/products/img_ra1a2b_image_n4o5p6.png", "caption": "" },
-              { "id": "img_ra3c4d", "image": "assets/products/img_ra3c4d_image_q7r8s9.png", "caption": "" }
-            ]
-          }
+          "sizes": [
+            { "id": "size_rp1v2w", "size_label": "25mg THC", "image": "assets/products/size_rp1v2w_image_h7i8j9.png" },
+            { "id": "size_rp3x4y", "size_label": "100mg THC", "image": "assets/products/size_rp3x4y_image_k1l2m3.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_ra1a2b", "image": "assets/products/img_ra1a2b_image_n4o5p6.png", "caption": "" },
+            { "id": "img_ra3c4d", "image": "assets/products/img_ra3c4d_image_q7r8s9.png", "caption": "" }
+          ]
         },
         {
           "id": "prod_sb9k0l",
@@ -337,33 +265,15 @@
           "detail_2_label": "",
           "detail_2_value": "",
           "tags": "Vape, Cartridge, Indica, Berry",
-          "sizes": {
-            "type": "collection",
-            "label": "Sizes",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "size_label": { "type": "text", "label": "Size" },
-              "image": { "type": "file", "label": "Size Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } }
-            },
-            "value": [
-              { "id": "size_sb1z2a", "size_label": "0.3g", "image": "assets/products/size_sb1z2a_image_t1u2v3.png" },
-              { "id": "size_sb3b4c", "size_label": "1g", "image": "assets/products/size_sb3b4c_image_w4x5y6.png" },
-              { "id": "size_sb5d6e", "size_label": "2g", "image": "assets/products/size_sb5d6e_image_z7a8b9.png" }
-            ]
-          },
-          "secondary_images": {
-            "type": "collection",
-            "label": "Secondary Images",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "image": { "type": "file", "label": "Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } },
-              "caption": { "type": "text", "label": "Caption (Optional)" }
-            },
-            "value": [
-              { "id": "img_sk1a2b", "image": "assets/products/img_sk1a2b_image_c1d2e3.png", "caption": "" },
-              { "id": "img_sk3c4d", "image": "assets/products/img_sk3c4d_image_f4g5h6.png", "caption": "" }
-            ]
-          }
+          "sizes": [
+            { "id": "size_sb1z2a", "size_label": "0.3g", "image": "assets/products/size_sb1z2a_image_t1u2v3.png" },
+            { "id": "size_sb3b4c", "size_label": "1g", "image": "assets/products/size_sb3b4c_image_w4x5y6.png" },
+            { "id": "size_sb5d6e", "size_label": "2g", "image": "assets/products/size_sb5d6e_image_z7a8b9.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_sk1a2b", "image": "assets/products/img_sk1a2b_image_c1d2e3.png", "caption": "" },
+            { "id": "img_sk3c4d", "image": "assets/products/img_sk3c4d_image_f4g5h6.png", "caption": "" }
+          ]
         },
         {
           "id": "prod_pt1m2n",
@@ -381,32 +291,14 @@
           "detail_2_label": "",
           "detail_2_value": "",
           "tags": "Flower, Hybrid, Craft, Small Batch",
-          "sizes": {
-            "type": "collection",
-            "label": "Sizes",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "size_label": { "type": "text", "label": "Size" },
-              "image": { "type": "file", "label": "Size Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } }
-            },
-            "value": [
-              { "id": "size_pt1f2g", "size_label": "1.0g", "image": "assets/products/size_pt1f2g_image_i7j8k9.png" },
-              { "id": "size_pt3h4i", "size_label": "2.0g", "image": "assets/products/size_pt3h4i_image_l1m2n3.png" }
-            ]
-          },
-          "secondary_images": {
-            "type": "collection",
-            "label": "Secondary Images",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "image": { "type": "file", "label": "Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } },
-              "caption": { "type": "text", "label": "Caption (Optional)" }
-            },
-            "value": [
-              { "id": "img_pr1a2b", "image": "assets/products/img_pr1a2b_image_o4p5q6.png", "caption": "" },
-              { "id": "img_pr3c4d", "image": "assets/products/img_pr3c4d_image_r7s8t9.png", "caption": "" }
-            ]
-          }
+          "sizes": [
+            { "id": "size_pt1f2g", "size_label": "1.0g", "image": "assets/products/size_pt1f2g_image_i7j8k9.png" },
+            { "id": "size_pt3h4i", "size_label": "2.0g", "image": "assets/products/size_pt3h4i_image_l1m2n3.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_pr1a2b", "image": "assets/products/img_pr1a2b_image_o4p5q6.png", "caption": "" },
+            { "id": "img_pr3c4d", "image": "assets/products/img_pr3c4d_image_r7s8t9.png", "caption": "" }
+          ]
         },
         {
           "id": "prod_rc3o4p",
@@ -424,33 +316,15 @@
           "detail_2_label": "Terpenes",
           "detail_2_value": "Cannabis-Derived",
           "tags": "Vape, Cartridge, Full Spectrum, Realeaf",
-          "sizes": {
-            "type": "collection",
-            "label": "Sizes",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "size_label": { "type": "text", "label": "Size" },
-              "image": { "type": "file", "label": "Size Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } }
-            },
-            "value": [
-              { "id": "size_rc1j2k", "size_label": "1g", "image": "assets/products/size_rc1j2k_image_u1v2w3.png" },
-              { "id": "size_rc3l4m", "size_label": "2g", "image": "assets/products/size_rc3l4m_image_x4y5z6.png" }
-            ]
-          },
-          "secondary_images": {
-            "type": "collection",
-            "label": "Secondary Images",
-            "item_schema": {
-              "id": { "type": "text", "label": "ID" },
-              "image": { "type": "file", "label": "Image", "meta": { "accepted_formats": ["png", "jpg", "webp"], "path": "assets/products/" } },
-              "caption": { "type": "text", "label": "Caption (Optional)" }
-            },
-            "value": [
-              { "id": "img_rl1a2b", "image": "assets/products/img_rl1a2b_image_a7b8c9.png", "caption": "" },
-              { "id": "img_rl3c4d", "image": "assets/products/img_rl3c4d_image_d1e2f3.png", "caption": "" },
-              { "id": "img_rl5e6f", "image": "assets/products/img_rl5e6f_image_g4h5i6.png", "caption": "" }
-            ]
-          }
+          "sizes": [
+            { "id": "size_rc1j2k", "size_label": "1g", "image": "assets/products/size_rc1j2k_image_u1v2w3.png" },
+            { "id": "size_rc3l4m", "size_label": "2g", "image": "assets/products/size_rc3l4m_image_x4y5z6.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_rl1a2b", "image": "assets/products/img_rl1a2b_image_a7b8c9.png", "caption": "" },
+            { "id": "img_rl3c4d", "image": "assets/products/img_rl3c4d_image_d1e2f3.png", "caption": "" },
+            { "id": "img_rl5e6f", "image": "assets/products/img_rl5e6f_image_g4h5i6.png", "caption": "" }
+          ]
         }
       ]
     }
