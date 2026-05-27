@@ -103,16 +103,26 @@
     // call and stashed the parsed result, read it for free.
     var stashed = window.__skoop_initial_data__;
     console.log('[skoop-prefetch] __skoop_initial_data__ present:', !!stashed,
-      stashed ? ('(keys: ' + Object.keys(stashed).slice(0, 5).join(', ') + ')') : '');
+      stashed ? '(Promise — will await)' : '');
 
+    // __skoop_initial_data__ is a Promise (set by the skoop-live.js fetch shim)
+    // that resolves to the parsed data.json object.  We must .then() it, not
+    // read it directly.
     if (stashed) {
-      extractUrls(stashed, out, 0);
-      var fromData = out.size;
-      scanDom(out);
-      var urls = Array.from(out).slice(0, MAX_QUEUE);
-      console.log('[skoop-prefetch] collected', urls.length, 'assets (' + fromData + ' from data.json, ' + (out.size - fromData) + ' from DOM)');
-      console.log('[skoop-prefetch] first 10:', urls.slice(0, 10));
-      return Promise.resolve(urls);
+      return Promise.resolve(stashed).then(function (data) {
+        if (data) {
+          extractUrls(data, out, 0);
+          console.log('[skoop-prefetch] data.json top-level keys:', Object.keys(data).slice(0, 8));
+        } else {
+          console.log('[skoop-prefetch] stash resolved to null — DOM scan only');
+        }
+        var fromData = out.size;
+        scanDom(out);
+        var urls = Array.from(out).slice(0, MAX_QUEUE);
+        console.log('[skoop-prefetch] collected', urls.length, 'assets (' + fromData + ' from data.json, ' + (out.size - fromData) + ' from DOM)');
+        console.log('[skoop-prefetch] first 10:', urls.slice(0, 10));
+        return urls;
+      });
     }
 
     // Otherwise try fetching data.json ourselves.  Silently skip if it does
