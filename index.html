@@ -779,6 +779,16 @@ function buildModalImages(p, b, sizes, secImgs) {
       </button>
     `).join('');
     sel.style.display = 'flex';
+  } else if (p.size) {
+    // If there is no sizes array but there is a size field, show it as a selected size toggle
+    sel.innerHTML = `
+      <button class="size-btn on"
+              style="--size-color:${color}"
+              data-idx="0">
+        ${p.size}
+      </button>
+    `;
+    sel.style.display = 'flex';
   } else {
     sel.innerHTML = '';
     sel.style.display = 'none';
@@ -826,7 +836,7 @@ function navImg(dir) {
     const isActive = cur?.type === 'size' && cur.sizeIdx === i;
     btn.classList.toggle('on', isActive);
     if (isActive) btn.style.setProperty('--size-color', color);
-    else btn.style.cssText = '';
+    else btn.style.removeProperty('--size-color');
   });
 }
 
