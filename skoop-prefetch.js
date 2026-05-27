@@ -102,54 +102,27 @@
     // If skoop-live.js already intercepted the app's own fetch('data.json')
     // call and stashed the parsed result, read it for free.
     var stashed = window.__skoop_initial_data__;
-    console.log('[skoop-prefetch] __skoop_initial_data__ present:', !!stashed,
-      stashed ? '(Promise — will await)' : '');
 
     // __skoop_initial_data__ is a Promise (set by the skoop-live.js fetch shim)
     // that resolves to the parsed data.json object.  We must .then() it, not
     // read it directly.
     if (stashed) {
       return Promise.resolve(stashed).then(function (data) {
-        if (data) {
-          extractUrls(data, out, 0);
-          console.log('[skoop-prefetch] data.json top-level keys:', Object.keys(data).slice(0, 8));
-        } else {
-          console.log('[skoop-prefetch] stash resolved to null — DOM scan only');
-        }
-        var fromData = out.size;
+        if (data) extractUrls(data, out, 0);
         scanDom(out);
-        var urls = Array.from(out).slice(0, MAX_QUEUE);
-        console.log('[skoop-prefetch] collected', urls.length, 'assets (' + fromData + ' from data.json, ' + (out.size - fromData) + ' from DOM)');
-        console.log('[skoop-prefetch] first 10:', urls.slice(0, 10));
-        return urls;
+        return Array.from(out).slice(0, MAX_QUEUE);
       });
     }
 
     // Otherwise try fetching data.json ourselves.  Silently skip if it does
     // not exist (apps with no configurator).
-    console.log('[skoop-prefetch] stash not found — fetching data.json directly');
     return fetch('./data.json', { cache: 'default' })
-      .then(function (r) {
-        console.log('[skoop-prefetch] data.json fetch status:', r.status, r.ok ? 'ok' : 'not ok');
-        return r.ok ? r.json() : null;
-      })
-      .catch(function (err) {
-        console.log('[skoop-prefetch] data.json fetch error:', err && err.message);
-        return null;
-      })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function ()  { return null; })
       .then(function (data) {
-        if (data) {
-          extractUrls(data, out, 0);
-          console.log('[skoop-prefetch] data.json top-level keys:', Object.keys(data).slice(0, 8));
-        } else {
-          console.log('[skoop-prefetch] no data.json — DOM scan only');
-        }
-        var fromData = out.size;
+        if (data) extractUrls(data, out, 0);
         scanDom(out);
-        var urls = Array.from(out).slice(0, MAX_QUEUE);
-        console.log('[skoop-prefetch] collected', urls.length, 'assets (' + fromData + ' from data.json, ' + (out.size - fromData) + ' from DOM)');
-        console.log('[skoop-prefetch] first 10:', urls.slice(0, 10));
-        return urls;
+        return Array.from(out).slice(0, MAX_QUEUE);
       });
   }
 
@@ -198,14 +171,7 @@
         } catch (_) {}
 
         fetch(url, opts)
-          .then(function (r) {
-            console.log('[skoop-prefetch] fetched:', url, r ? r.status : 'no response');
-          })
-          .catch(function (err) {
-            if (err && err.name !== 'AbortError') {
-              console.log('[skoop-prefetch] fetch error:', url, err && err.message);
-            }
-          })
+          .catch(function () {})
           .then(function () {
             currentAbort = null;
             setTimeout(resolve, BATCH_DELAY_MS);
