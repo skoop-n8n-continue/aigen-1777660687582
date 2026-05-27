@@ -770,7 +770,7 @@ function buildModalImages(p, b, sizes, secImgs) {
 
   // ── Size selector ──
   const sel = document.getElementById('sizeSelector');
-  if (sizes.length > 1) {
+  if (sizes.length > 0) {
     sel.innerHTML = sizes.map((sz, i) => `
       <button class="size-btn ${i === 0 ? 'on' : ''}"
               style="${i === 0 ? `--size-color:${color}` : ''}"
