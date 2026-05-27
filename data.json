@@ -151,7 +151,7 @@
           "image": "assets/products/prod_dc1a2b_image_h1i2j3.png",
           "grad": "linear-gradient(135deg,#0a1828 0%,#1a3a5c 60%,#0a1828 100%)",
           "product_type": "Tincture",
-          "lineage": "Wellness (Calm)",
+          "lineage": "Calm",
           "potency": "4:1:1 CBD:CBG:THC",
           "detail_1_label": "Flavor",
           "detail_1_value": "Blood Orange",
@@ -205,7 +205,7 @@
           "image": "assets/products/prod_fo5g6h_image_n7o8p9.png",
           "grad": "linear-gradient(135deg,#1a0500 0%,#4a1500 60%,#1a0500 100%)",
           "product_type": "Pre-Roll",
-          "lineage": "Pre-Roll",
+          "lineage": "",
           "potency": "",
           "detail_1_label": "Infusion",
           "detail_1_value": "Uninfused",
@@ -233,7 +233,7 @@
           "image": "assets/products/prod_rp7i8j_image_q1r2s3.png",
           "grad": "linear-gradient(135deg,#1a1000 0%,#4a3200 60%,#1a1000 100%)",
           "product_type": "Edible",
-          "lineage": "Edible",
+          "lineage": "",
           "potency": "25mg or 100mg THC",
           "detail_1_label": "Flavor",
           "detail_1_value": "Pineapple",
@@ -324,6 +324,138 @@
             { "id": "img_rl1a2b", "image": "assets/products/img_rl1a2b_image_a7b8c9.png", "caption": "" },
             { "id": "img_rl3c4d", "image": "assets/products/img_rl3c4d_image_d1e2f3.png", "caption": "" },
             { "id": "img_rl5e6f", "image": "assets/products/img_rl5e6f_image_g4h5i6.png", "caption": "" }
+          ]
+        },
+        {
+          "id": "prod_de2b3c",
+          "name": "DRYP Energy Tincture",
+          "sub": "Tinctures · 30mL",
+          "desc": "Dryp Energy Tincture is a purpose-built, uplifting formula featuring a 2:1 ratio of THCV to THC, designed by Realeaf Botanicals to promote energy, focus, and motivation without heavy sedation. Each precisely measured dose delivers 20 mg THCV—a cannabinoid known for supporting alertness, appetite control, and clear-headed stimulation—paired with 10 mg THC to provide balanced euphoria and enhance the entourage effect. With 100 mg total THC per bottle and a crisp, green apple natural flavor, Dryp Energy offers smooth, consistent dosing for an energized, productive experience.",
+          "brand": "brand_dp7k4n",
+          "image": "assets/products/prod_de2b3c_image_p1q2r3.png",
+          "grad": "",
+          "product_type": "Tincture",
+          "lineage": "Energy",
+          "potency": "2:1 THCV:THC",
+          "detail_1_label": "Flavor",
+          "detail_1_value": "Green Apple",
+          "detail_2_label": "Servings",
+          "detail_2_value": "10 per bottle",
+          "tags": "Energy, THCV",
+          "sizes": [
+            { "id": "size_ea1b2c", "size_label": "30mL (100mg THC)", "image": "assets/products/size_ea1b2c_image_s4t5u6.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_en1a2b", "image": "assets/products/img_en1a2b_image_v7w8x9.png", "caption": "" },
+            { "id": "img_en3c4d", "image": "assets/products/img_en3c4d_image_y1z2a3.png", "caption": "" },
+            { "id": "img_en5e6f", "image": "assets/products/img_en5e6f_image_b4c5d6.png", "caption": "" }
+          ]
+        },
+        {
+          "id": "prod_fg3d4e",
+          "name": "Grease Fire",
+          "sub": "Foryst Flower · Indica-Dominant Hybrid",
+          "desc": "Grease Fire by Realeaf Botanicals is a powerhouse indica-dominant hybrid crafted from a bold blend of Garlic Cookies × Banana Punch × Gorilla Breath × Hylife, delivering rich flavor and deeply satisfying effects. Expect a pungent, gassy aroma layered with savory garlic notes and a subtle banana-sweet finish. The effects come on smooth and strong—euphoric calm followed by full-body relaxation, making Grease Fire ideal for stress relief, unwinding after a long day, and settling into a mellow evening vibe without excessive sedation.",
+          "brand": "brand_rrxxsh",
+          "image": "assets/products/prod_fg3d4e_image_e7f8g9.png",
+          "grad": "",
+          "product_type": "Flower",
+          "lineage": "Indica-Dominant Hybrid",
+          "potency": "",
+          "detail_1_label": "",
+          "detail_1_value": "",
+          "detail_2_label": "",
+          "detail_2_value": "",
+          "tags": "Craft, Gassy",
+          "sizes": [
+            { "id": "size_gf1a2b", "size_label": "1.0g",  "image": "assets/products/size_gf1a2b_image_h1i2j3.png" },
+            { "id": "size_gf3c4d", "size_label": "2.0g",  "image": "assets/products/size_gf3c4d_image_k4l5m6.png" },
+            { "id": "size_gf5e6f", "size_label": "3.5g",  "image": "assets/products/size_gf5e6f_image_n7o8p9.png" },
+            { "id": "size_gf7g8h", "size_label": "7.0g",  "image": "assets/products/size_gf7g8h_image_q1r2s3.png" },
+            { "id": "size_gf9i0j", "size_label": "14.0g", "image": "assets/products/size_gf9i0j_image_t4u5v6.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_gf1a2b", "image": "assets/products/img_gf1a2b_image_w7x8y9.png", "caption": "" },
+            { "id": "img_gf3c4d", "image": "assets/products/img_gf3c4d_image_z1a2b3.png", "caption": "" },
+            { "id": "img_gf5e6f", "image": "assets/products/img_gf5e6f_image_c4d5e6.png", "caption": "" }
+          ]
+        },
+        {
+          "id": "prod_fn5g6h",
+          "name": "Fyre Nozze Punch",
+          "sub": "Pre-Rolls · Infused",
+          "desc": "Nozze Punch combines the sweet, creamy richness of Nozze Gelato flower with potent Mendo Punch CO₂-extracted distillate for a bold, flavor-packed infused experience. Bursting with notes of sugary fruit, vanilla cream, and subtle earthy gas, this pre-roll delivers smooth smoke with elevated potency in every hit. Crafted for those seeking powerful effects and full-bodied flavor, Nozze Punch offers deeply relaxing, euphoric vibes backed by a robust cannabinoid profile featuring THC, CBG, and CBC.",
+          "brand": "brand_42c92z",
+          "image": "assets/products/prod_fn5g6h_image_f7g8h9.png",
+          "grad": "",
+          "product_type": "Infused Pre-Roll",
+          "lineage": "",
+          "potency": "47.3% THC",
+          "detail_1_label": "Infusion",
+          "detail_1_value": "Mendo Punch Distillate",
+          "detail_2_label": "Total Cannabinoids",
+          "detail_2_value": "52.3%",
+          "tags": "Nozze Punch, Dessert",
+          "sizes": [
+            { "id": "size_np1a2b", "size_label": "1-Pack",       "image": "assets/products/size_np1a2b_image_i1j2k3.png" },
+            { "id": "size_np3c4d", "size_label": "2-Pack",       "image": "assets/products/size_np3c4d_image_l4m5n6.png" },
+            { "id": "size_np5e6f", "size_label": "3-Pack",       "image": "assets/products/size_np5e6f_image_o7p8q9.png" },
+            { "id": "size_np7g8h", "size_label": "8-Pack Minis", "image": "assets/products/size_np7g8h_image_r1s2t3.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_np1a2b", "image": "assets/products/img_np1a2b_image_u4v5w6.png", "caption": "" },
+            { "id": "img_np3c4d", "image": "assets/products/img_np3c4d_image_x7y8z9.png", "caption": "" },
+            { "id": "img_np5e6f", "image": "assets/products/img_np5e6f_image_a1b2c3.png", "caption": "" }
+          ]
+        },
+        {
+          "id": "prod_rb7i8j",
+          "name": "Rayne Blueberry",
+          "sub": "Mighty Rayne · Macro Gummy",
+          "desc": "Mighty Rayne macro gummies by Realeaf Botanicals are bold, single-serving edibles for experienced consumers. Blueberry delivers a deep, rich burst of berry bliss—striking the perfect balance between bold and smooth. RAYNE or shine.",
+          "brand": "brand_16e3jv",
+          "image": "assets/products/prod_rb7i8j_image_d4e5f6.png",
+          "grad": "",
+          "product_type": "Edible",
+          "lineage": "",
+          "potency": "50mg or 100mg THC",
+          "detail_1_label": "Flavor",
+          "detail_1_value": "Blueberry",
+          "detail_2_label": "Format",
+          "detail_2_value": "Macro Gummy",
+          "tags": "Gummy, Mighty Rayne",
+          "sizes": [
+            { "id": "size_bl1a2b", "size_label": "50mg THC",  "image": "assets/products/size_bl1a2b_image_g7h8i9.png" },
+            { "id": "size_bl3c4d", "size_label": "100mg THC", "image": "assets/products/size_bl3c4d_image_j1k2l3.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_rb1a2b", "image": "assets/products/img_rb1a2b_image_m4n5o6.png", "caption": "" },
+            { "id": "img_rb3c4d", "image": "assets/products/img_rb3c4d_image_p7q8r9.png", "caption": "" }
+          ]
+        },
+        {
+          "id": "prod_rd9k0l",
+          "name": "Daily Grapes Rosin Badder",
+          "sub": "Full Spectrum · Live Rosin Concentrate",
+          "desc": "Daily Grapes live rosin badder—a craft cannabis concentrate you can dab straight or add to flower for an extra lift. Cold-processed from fresh-frozen flower, this full-spectrum live rosin badder preserves the plant's complete cannabinoid and terpene profile for a true-to-flower flavor and effect. Rich grape and sweet fruit notes define every dab.",
+          "brand": "brand_re9xmf",
+          "image": "assets/products/prod_rd9k0l_image_s1t2u3.png",
+          "grad": "",
+          "product_type": "Concentrate",
+          "lineage": "",
+          "potency": "",
+          "detail_1_label": "Format",
+          "detail_1_value": "Live Rosin Badder",
+          "detail_2_label": "Use",
+          "detail_2_value": "Dab or Flower Topper",
+          "tags": "Rosin, Grapes",
+          "sizes": [
+            { "id": "size_dg1a2b", "size_label": "1g", "image": "assets/products/size_dg1a2b_image_v4w5x6.png" }
+          ],
+          "secondary_images": [
+            { "id": "img_dg1a2b", "image": "assets/products/img_dg1a2b_image_y7z8a9.png", "caption": "" },
+            { "id": "img_dg3c4d", "image": "assets/products/img_dg3c4d_image_b1c2d3.png", "caption": "" },
+            { "id": "img_dg5e6f", "image": "assets/products/img_dg5e6f_image_e4f5g6.png", "caption": "" }
           ]
         }
       ]
