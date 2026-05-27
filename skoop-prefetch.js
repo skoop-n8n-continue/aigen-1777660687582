@@ -102,21 +102,44 @@
     // If skoop-live.js already intercepted the app's own fetch('data.json')
     // call and stashed the parsed result, read it for free.
     var stashed = window.__skoop_initial_data__;
+    console.log('[skoop-prefetch] __skoop_initial_data__ present:', !!stashed,
+      stashed ? ('(keys: ' + Object.keys(stashed).slice(0, 5).join(', ') + ')') : '');
+
     if (stashed) {
       extractUrls(stashed, out, 0);
+      var fromData = out.size;
       scanDom(out);
-      return Promise.resolve(Array.from(out).slice(0, MAX_QUEUE));
+      var urls = Array.from(out).slice(0, MAX_QUEUE);
+      console.log('[skoop-prefetch] collected', urls.length, 'assets (' + fromData + ' from data.json, ' + (out.size - fromData) + ' from DOM)');
+      console.log('[skoop-prefetch] first 10:', urls.slice(0, 10));
+      return Promise.resolve(urls);
     }
 
     // Otherwise try fetching data.json ourselves.  Silently skip if it does
     // not exist (apps with no configurator).
+    console.log('[skoop-prefetch] stash not found — fetching data.json directly');
     return fetch('./data.json', { cache: 'default' })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .catch(function ()  { return null; })
+      .then(function (r) {
+        console.log('[skoop-prefetch] data.json fetch status:', r.status, r.ok ? 'ok' : 'not ok');
+        return r.ok ? r.json() : null;
+      })
+      .catch(function (err) {
+        console.log('[skoop-prefetch] data.json fetch error:', err && err.message);
+        return null;
+      })
       .then(function (data) {
-        if (data) extractUrls(data, out, 0);
+        if (data) {
+          extractUrls(data, out, 0);
+          console.log('[skoop-prefetch] data.json top-level keys:', Object.keys(data).slice(0, 8));
+        } else {
+          console.log('[skoop-prefetch] no data.json — DOM scan only');
+        }
+        var fromData = out.size;
         scanDom(out);
-        return Array.from(out).slice(0, MAX_QUEUE);
+        var urls = Array.from(out).slice(0, MAX_QUEUE);
+        console.log('[skoop-prefetch] collected', urls.length, 'assets (' + fromData + ' from data.json, ' + (out.size - fromData) + ' from DOM)');
+        console.log('[skoop-prefetch] first 10:', urls.slice(0, 10));
+        return urls;
       });
   }
 
@@ -165,7 +188,14 @@
         } catch (_) {}
 
         fetch(url, opts)
-          .catch(function () {})
+          .then(function (r) {
+            console.log('[skoop-prefetch] fetched:', url, r ? r.status : 'no response');
+          })
+          .catch(function (err) {
+            if (err && err.name !== 'AbortError') {
+              console.log('[skoop-prefetch] fetch error:', url, err && err.message);
+            }
+          })
           .then(function () {
             currentAbort = null;
             setTimeout(resolve, BATCH_DELAY_MS);
