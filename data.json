@@ -3,6 +3,7 @@
   "document_version": 1,
   "sections": {
     "app_settings": {
+      "description": "Global colors, typography, and branding for the storefront. Changes here affect the entire display.",
       "bg": {
         "type": "color",
         "label": "Background (Base)",
@@ -92,6 +93,7 @@
     "brands": {
       "type": "collection",
       "label": "Brands",
+      "description": "The cannabis brands featured on this display. Each brand has its own card on the main screen with a logo, name, and tagline.",
       "item_schema": {
         "id": {
           "type": "text",
@@ -206,6 +208,7 @@
     "products": {
       "type": "collection",
       "label": "Products",
+      "description": "All products shown on the storefront. Each product can have multiple sizes (with individual images) and secondary images displayed in the product popup carousel.",
       "item_schema": {
         "id": {
           "type": "text",
