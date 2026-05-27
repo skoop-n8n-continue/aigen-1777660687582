@@ -19,11 +19,16 @@
   var ASSET_EXT_RE = /\.(jpe?g|png|gif|webp|svg|avif|mp4|webm|mov|ogg|mp3|wav|woff2?|ttf|otf)(\?[^"'\s]*)?$/i;
 
   function isAssetUrl(v) {
-    if (typeof v !== 'string' || v.length < 4 || v.length > 1000) return false;
+    if (typeof v !== 'string' || v.length < 5 || v.length > 1000) return false;
+    // The extension test is the primary guard — asset filenames end in a known
+    // media extension regardless of whether the value is a full URL, a
+    // root-relative path, an app-relative path, or a bare filename stored in
+    // data.json (e.g. "brand_hero_abc123.png" or "assets/slide2-bg.webp").
     if (!ASSET_EXT_RE.test(v)) return false;
+    // Exclude non-image data URIs (data:text/..., data:application/...).
     var lo = v.toLowerCase();
-    return lo.startsWith('http') || lo.startsWith('/') ||
-           lo.startsWith('./') || lo.startsWith('../');
+    if (lo.startsWith('data:') && !lo.startsWith('data:image')) return false;
+    return true;
   }
 
   // Recursively walk a JSON value and collect every string that looks
