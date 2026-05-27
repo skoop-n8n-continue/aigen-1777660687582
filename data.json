@@ -157,7 +157,7 @@
           "detail_1_value": "Blood Orange",
           "detail_2_label": "Servings",
           "detail_2_value": "10 per bottle",
-          "tags": "Tincture, Wellness, CBD, Calm",
+          "tags": "CBD, Calm",
           "sizes": [
             { "id": "size_ca1b2c", "size_label": "30mL (100mg THC)", "image": "assets/products/size_ca1b2c_image_c4d5e6.png" }
           ],
@@ -182,7 +182,7 @@
           "detail_1_value": "",
           "detail_2_label": "",
           "detail_2_value": "",
-          "tags": "Flower, Hybrid, Craft",
+          "tags": "Craft",
           "sizes": [
             { "id": "size_cc1d2e", "size_label": "1.0g", "image": "assets/products/size_cc1d2e_image_o7p8q9.png" },
             { "id": "size_cc3f4g", "size_label": "2.0g", "image": "assets/products/size_cc3f4g_image_r1s2t3.png" },
@@ -211,7 +211,7 @@
           "detail_1_value": "Uninfused",
           "detail_2_label": "",
           "detail_2_value": "",
-          "tags": "Pre-Roll, OG, Uninfused",
+          "tags": "OG",
           "sizes": [
             { "id": "size_fo1n2o", "size_label": "1-Pack", "image": "assets/products/size_fo1n2o_image_m4n5o6.png" },
             { "id": "size_fo3p4q", "size_label": "2-Pack", "image": "assets/products/size_fo3p4q_image_p7q8r9.png" },
@@ -239,7 +239,7 @@
           "detail_1_value": "Pineapple",
           "detail_2_label": "Format",
           "detail_2_value": "Macro Gummy",
-          "tags": "Edible, Gummy, Pineapple, Mighty Rayne",
+          "tags": "Gummy, Mighty Rayne",
           "sizes": [
             { "id": "size_rp1v2w", "size_label": "25mg THC", "image": "assets/products/size_rp1v2w_image_h7i8j9.png" },
             { "id": "size_rp3x4y", "size_label": "100mg THC", "image": "assets/products/size_rp3x4y_image_k1l2m3.png" }
@@ -264,7 +264,7 @@
           "detail_1_value": "Berry Gelato",
           "detail_2_label": "",
           "detail_2_value": "",
-          "tags": "Vape, Cartridge, Indica, Berry",
+          "tags": "Berry",
           "sizes": [
             { "id": "size_sb1z2a", "size_label": "0.3g", "image": "assets/products/size_sb1z2a_image_t1u2v3.png" },
             { "id": "size_sb3b4c", "size_label": "1g", "image": "assets/products/size_sb3b4c_image_w4x5y6.png" },
@@ -290,7 +290,7 @@
           "detail_1_value": "",
           "detail_2_label": "",
           "detail_2_value": "",
-          "tags": "Flower, Hybrid, Craft, Small Batch",
+          "tags": "Craft, Small Batch",
           "sizes": [
             { "id": "size_pt1f2g", "size_label": "1.0g", "image": "assets/products/size_pt1f2g_image_i7j8k9.png" },
             { "id": "size_pt3h4i", "size_label": "2.0g", "image": "assets/products/size_pt3h4i_image_l1m2n3.png" }
@@ -315,7 +315,7 @@
           "detail_1_value": "Full Spectrum",
           "detail_2_label": "Terpenes",
           "detail_2_value": "Cannabis-Derived",
-          "tags": "Vape, Cartridge, Full Spectrum, Realeaf",
+          "tags": "Realeaf",
           "sizes": [
             { "id": "size_rc1j2k", "size_label": "1g", "image": "assets/products/size_rc1j2k_image_u1v2w3.png" },
             { "id": "size_rc3l4m", "size_label": "2g", "image": "assets/products/size_rc3l4m_image_x4y5z6.png" }

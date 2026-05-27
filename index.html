@@ -132,11 +132,17 @@
     }
     .brand-card-logo {
       height: 38px; object-fit: contain; object-position: left;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
       transition: filter 0.2s;
     }
     .brand-card:hover .brand-card-logo { filter: drop-shadow(0 2px 12px rgba(255,255,255,0.2)); }
+    .brand-card-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: rgba(255,255,255,0.92);
+      margin-bottom: 6px; line-height: 1.1;
+    }
     .brand-card-tagline {
       font-size: 12px; color: rgba(255,255,255,0.65);
       line-height: 1.5; margin-bottom: 14px;
@@ -250,20 +256,29 @@
     }
     .modal-close:hover { background: rgba(255,255,255,0.12); }
 
-    /* ── Modal image area ── */
-    .modal-img-area { position: relative; width: 100%; }
-
-    .modal-main-img {
-      width: 100%; height: 260px; border-radius: 16px 16px 0 0;
-      overflow: hidden; position: relative;
-      display: flex; align-items: center; justify-content: center;
+    /* ── Modal top info section ── */
+    .modal-body-top { padding: 22px 30px 16px; }
+    .modal-brand-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 4px 11px; border-radius: 4px;
+      margin-bottom: 12px;
+      background: color-mix(in srgb, var(--badge-color) 10%, transparent);
+      color: var(--badge-color);
+      border: 1px solid color-mix(in srgb, var(--badge-color) 20%, transparent);
     }
-    .modal-img-logo { height: 64px; opacity: 0.35; object-fit: contain; position: relative; z-index: 1; }
+    .modal-name { font-family: 'Oswald', sans-serif; font-size: clamp(22px, 4vw, 30px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.05; margin-bottom: 4px; }
+    .modal-sub { font-size: 14px; color: var(--text2); margin-bottom: 14px; }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+    .mtag { font-size: 12px; padding: 5px 12px; border-radius: 16px; border: 1px solid var(--border2); color: var(--text2); font-weight: 500; }
+
+    /* ── Accent divider ── */
+    .modal-accent { height: 3px; width: 100%; }
 
     /* ── Size selector ── */
     .size-selector {
       display: flex; gap: 8px; flex-wrap: wrap;
-      padding: 12px 16px 0;
+      padding: 14px 16px 0;
     }
     .size-selector:empty { display: none; }
     .size-btn {
@@ -277,42 +292,39 @@
     .size-btn:hover { border-color: #555; color: var(--text); }
     .size-btn.on { background: color-mix(in srgb, var(--size-color) 12%, transparent); border-color: var(--size-color); color: var(--size-color); }
 
-    /* ── Secondary images carousel ── */
-    .sec-images {
-      display: flex; gap: 8px; overflow-x: auto;
-      padding: 10px 16px 0;
-      scrollbar-width: none;
-    }
-    .sec-images::-webkit-scrollbar { display: none; }
-    .sec-images:empty { display: none; }
-    .sec-thumb {
-      flex-shrink: 0; width: 72px; height: 72px; border-radius: 8px;
-      overflow: hidden; cursor: pointer;
-      border: 2px solid transparent;
-      transition: border-color 0.16s, opacity 0.16s;
-      background-size: cover; background-position: center;
-      opacity: 0.6;
-    }
-    .sec-thumb:hover { opacity: 0.9; }
-    .sec-thumb.active { border-color: var(--size-color); opacity: 1; }
+    /* ── Modal image area ── */
+    .modal-img-area { position: relative; width: 100%; margin-top: 14px; }
 
-    .modal-accent { height: 3px; width: 100%; margin-top: 12px; }
-
-    /* ── Modal body ── */
-    .modal-body { padding: 22px 30px 32px; }
-    .modal-brand-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; padding: 4px 11px; border-radius: 4px;
-      margin-bottom: 14px;
-      background: color-mix(in srgb, var(--badge-color) 10%, transparent);
-      color: var(--badge-color);
-      border: 1px solid color-mix(in srgb, var(--badge-color) 20%, transparent);
+    .modal-main-img {
+      width: 100%; height: 280px;
+      overflow: hidden; position: relative;
+      display: flex; align-items: center; justify-content: center;
     }
-    .modal-name { font-family: 'Oswald', sans-serif; font-size: clamp(22px, 4vw, 30px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.05; margin-bottom: 6px; }
-    .modal-sub { font-size: 14px; color: var(--text2); margin-bottom: 18px; }
-    .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
-    .mtag { font-size: 12px; padding: 5px 12px; border-radius: 16px; border: 1px solid var(--border2); color: var(--text2); font-weight: 500; }
+
+    /* ── Image navigation arrows ── */
+    .img-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.9); font-size: 24px; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.18s, opacity 0.18s; z-index: 5;
+      padding-bottom: 2px;
+    }
+    .img-nav:hover { background: rgba(255,255,255,0.18); }
+    .img-nav-prev { left: 12px; }
+    .img-nav-next { right: 12px; }
+    .img-nav.hidden { opacity: 0; pointer-events: none; }
+    .img-counter {
+      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      font-size: 11px; color: rgba(255,255,255,0.6);
+      background: rgba(0,0,0,0.5); padding: 3px 10px; border-radius: 10px;
+      pointer-events: none;
+    }
+    .img-counter.hidden { display: none; }
+
+    /* ── Modal bottom body ── */
+    .modal-body { padding: 20px 30px 32px; }
     .modal-divider { height: 1px; background: var(--border); margin: 20px 0; }
     .modal-desc { font-size: 14px; line-height: 1.82; color: var(--text2); margin-bottom: 24px; }
     .modal-details-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -330,7 +342,8 @@
       .brands-wrap { padding: 40px 20px 60px; }
       .brand-hero-overlay { padding: 0 24px; }
       .products-section { padding: 28px 20px 60px; }
-      .modal-body { padding: 20px 20px 28px; }
+      .modal-body-top { padding: 18px 20px 14px; }
+      .modal-body { padding: 18px 20px 28px; }
     }
   </style>
 </head>
@@ -394,18 +407,26 @@
 <div class="modal-backdrop" id="modalBackdrop" onclick="backdropClick(event)">
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-img-area">
-      <div class="modal-main-img" id="modalMainImg"></div>
-      <div class="size-selector" id="sizeSelector"></div>
-      <div class="sec-images" id="secImages"></div>
-    </div>
-    <div class="modal-accent" id="modalAccent"></div>
-    <div class="modal-body">
+    <!-- TOP INFO: badge, name, sub, tags -->
+    <div class="modal-body-top">
       <div class="modal-brand-badge" id="modalBadge"></div>
       <h2 class="modal-name" id="modalName"></h2>
       <p class="modal-sub" id="modalSub"></p>
       <div class="modal-tags" id="modalTags"></div>
-      <div class="modal-divider"></div>
+    </div>
+    <!-- COLOR DIVIDER -->
+    <div class="modal-accent" id="modalAccent"></div>
+    <!-- SIZE SELECTOR -->
+    <div class="size-selector" id="sizeSelector"></div>
+    <!-- IMAGE WITH ARROW NAVIGATION -->
+    <div class="modal-img-area">
+      <div class="modal-main-img" id="modalMainImg"></div>
+      <button class="img-nav img-nav-prev hidden" id="imgNavPrev" onclick="navImg(-1)">&#8249;</button>
+      <button class="img-nav img-nav-next hidden" id="imgNavNext" onclick="navImg(1)">&#8250;</button>
+      <div class="img-counter hidden" id="imgCounter"></div>
+    </div>
+    <!-- BOTTOM BODY: description + detail cards -->
+    <div class="modal-body">
       <p class="modal-desc" id="modalDesc"></p>
       <div class="modal-details-grid" id="modalDetails"></div>
     </div>
@@ -436,7 +457,8 @@ let activeFilter = 'All';
 let modalProduct = null;
 let modalBrand = null;
 let activeSizeIdx = 0;
-let activeImgSrc = '';
+let allImgs = [];
+let activeImgIdx = 0;
 
 /* ════════════════════════════
    INIT
@@ -488,11 +510,11 @@ function renderBrands() {
         <img src="${b.logoW}" alt="${b.name}" class="brand-card-logo"
              data-bind-src="brands.${idx}.logoW"
              data-bind-attr="alt:brands.${idx}.name">
+        <div class="brand-card-name" data-bind-text="brands.${idx}.name">${b.name}</div>
         <p class="brand-card-tagline"
            data-bind-text="brands.${idx}.tagline">${b.tagline}</p>
         <div class="brand-card-btn">
-          Explore <span data-bind-text="brands.${idx}.name">${b.name}</span>
-          <span style="opacity:.7">›</span>
+          Explore <span style="opacity:.7">›</span>
         </div>
       </div>
     </div>
@@ -637,14 +659,13 @@ function renderProducts(products) {
 
     const imgStyle = p.image
       ? `background:url('${p.image}') center/contain no-repeat; background-color:var(--bg4)`
-      : `background:${p.grad}`;
+      : `background-color:var(--bg4)`;
 
     return `
     <div class="prod-card" data-id="${p.id}" data-filtervals="${filterStr}"
          onclick="openProduct('${p.id}')">
       <div class="prod-thumb" data-bind-bg-image="products.${idx}.image"
            style="${imgStyle}">
-        ${p.image ? '' : `<img src="${b.logoW}" alt="${b.name}" class="prod-thumb-logo" data-bind-src="brands.${bIdx}.logoW" data-bind-attr="alt:brands.${bIdx}.name">`}
       </div>
       <div class="prod-body">
         <div class="prod-name" data-bind-text="products.${idx}.name">${p.name}</div>
@@ -724,22 +745,28 @@ function openProduct(id) {
   `).join('');
 
   // ── Sizes & secondary images ──
-  const sizes  = p.sizes || [];
+  const sizes   = p.sizes || [];
   const secImgs = p.secondary_images || [];
 
-  buildModalImages(p, b, pIdx, bIdx, sizes, secImgs);
+  buildModalImages(p, b, sizes, secImgs);
 
   document.getElementById('modal').scrollTop = 0;
   document.getElementById('modalBackdrop').classList.add('open');
 }
 
-function buildModalImages(p, b, pIdx, bIdx, sizes, secImgs) {
+function buildModalImages(p, b, sizes, secImgs) {
   const color = b.color;
 
-  // ── Main image: default to first size image, fallback to product image ──
-  const firstSizeImg = sizes.length > 0 ? sizes[0].image : null;
-  activeImgSrc = firstSizeImg || p.image || '';
-  setModalMainImg(activeImgSrc, p, b, bIdx);
+  // Build combined image deck: [selected size image, ...secondary images]
+  const baseImg = sizes.length > 0 ? sizes[0].image : (p.image || '');
+  allImgs = [];
+  if (baseImg) allImgs.push({ src: baseImg, type: 'size', sizeIdx: 0 });
+  secImgs.forEach(img => { if (img.image) allImgs.push({ src: img.image, type: 'secondary' }); });
+  activeImgIdx = 0;
+  activeSizeIdx = 0;
+
+  setModalMainImg(allImgs[0]?.src || '');
+  updateImgNav();
 
   // ── Size selector ──
   const sel = document.getElementById('sizeSelector');
@@ -755,81 +782,76 @@ function buildModalImages(p, b, pIdx, bIdx, sizes, secImgs) {
   } else {
     sel.innerHTML = '';
   }
-
-  // ── Secondary images strip ──
-  const strip = document.getElementById('secImages');
-  if (secImgs.length > 0) {
-    strip.innerHTML = secImgs.map((img, i) => `
-      <div class="sec-thumb"
-           style="background-image:url('${img.image}')"
-           data-src="${img.image}"
-           onclick="selectSecImg('${img.image}', this)">
-      </div>
-    `).join('');
-  } else {
-    strip.innerHTML = '';
-  }
 }
 
-function setModalMainImg(src, p, b, bIdx) {
+function setModalMainImg(src) {
   const wrap = document.getElementById('modalMainImg');
+  wrap.style.position = 'relative';
   if (src) {
     wrap.innerHTML = `<div style="position:absolute;inset:0;background:url('${src}') center/contain no-repeat;background-color:var(--bg4)"></div>`;
   } else {
-    wrap.innerHTML = `
-      <div style="position:absolute;inset:0;background:${p.grad}"></div>
-      <img src="${b.logoW}" alt="${b.name}" class="modal-img-logo"
-           data-bind-src="brands.${bIdx}.logoW"
-           data-bind-attr="alt:brands.${bIdx}.name">
-    `;
+    wrap.innerHTML = `<div style="position:absolute;inset:0;background-color:var(--bg4)"></div>`;
   }
-  wrap.style.position = 'relative';
 }
 
-function selectSize(idx) {
-  const sizes  = modalProduct.sizes || [];
-  const b      = modalBrand;
-  const bIdx   = appData.sections.brands.value.indexOf(b);
-  const color  = b.color;
-  const p      = modalProduct;
+function updateImgNav() {
+  const total   = allImgs.length;
+  const prevBtn = document.getElementById('imgNavPrev');
+  const nextBtn = document.getElementById('imgNavNext');
+  const counter = document.getElementById('imgCounter');
+  if (total <= 1) {
+    prevBtn.classList.add('hidden');
+    nextBtn.classList.add('hidden');
+    counter.classList.add('hidden');
+  } else {
+    prevBtn.classList.remove('hidden');
+    nextBtn.classList.remove('hidden');
+    counter.classList.remove('hidden');
+    counter.textContent = `${activeImgIdx + 1} / ${total}`;
+  }
+}
 
-  activeSizeIdx = idx;
-  const sz = sizes[idx];
-  activeImgSrc = sz.image || p.image || '';
+function navImg(dir) {
+  const total = allImgs.length;
+  if (total <= 1) return;
+  activeImgIdx = (activeImgIdx + dir + total) % total;
+  setModalMainImg(allImgs[activeImgIdx]?.src || '');
+  updateImgNav();
 
-  setModalMainImg(activeImgSrc, p, b, bIdx);
-
-  // Clear secondary image active state when switching sizes
-  document.querySelectorAll('.sec-thumb').forEach(t => t.classList.remove('active'));
-
-  // Update size button styles
+  // Sync size buttons: highlight if current image is a size image
+  const cur = allImgs[activeImgIdx];
+  const color = modalBrand.color;
   document.querySelectorAll('.size-btn').forEach((btn, i) => {
-    btn.classList.toggle('on', i === idx);
-    if (i === idx) {
-      btn.style.setProperty('--size-color', color);
-    } else {
-      btn.style.cssText = '';
-    }
+    const isActive = cur?.type === 'size' && cur.sizeIdx === i;
+    btn.classList.toggle('on', isActive);
+    if (isActive) btn.style.setProperty('--size-color', color);
+    else btn.style.cssText = '';
   });
 }
 
-function selectSecImg(src, thumbEl) {
-  const b    = modalBrand;
-  const bIdx = appData.sections.brands.value.indexOf(b);
-  const p    = modalProduct;
+function selectSize(idx) {
+  const sizes   = modalProduct.sizes || [];
+  const secImgs = modalProduct.secondary_images || [];
+  const b       = modalBrand;
+  const color   = b.color;
+  const p       = modalProduct;
 
-  activeImgSrc = src;
-  setModalMainImg(src, p, b, bIdx);
+  activeSizeIdx = idx;
 
-  // Update thumbnail active state
-  document.querySelectorAll('.sec-thumb').forEach(t => t.classList.remove('active'));
-  thumbEl.classList.add('active');
-  thumbEl.style.setProperty('--size-color', b.color);
+  // Rebuild gallery with this size's image as entry 0
+  const baseImg = sizes[idx]?.image || p.image || '';
+  allImgs = [];
+  if (baseImg) allImgs.push({ src: baseImg, type: 'size', sizeIdx: idx });
+  secImgs.forEach(img => { if (img.image) allImgs.push({ src: img.image, type: 'secondary' }); });
+  activeImgIdx = 0;
 
-  // Clear size selector active when a secondary image is chosen
-  document.querySelectorAll('.size-btn').forEach(btn => {
-    btn.classList.remove('on');
-    btn.style.cssText = '';
+  setModalMainImg(allImgs[0]?.src || '');
+  updateImgNav();
+
+  document.querySelectorAll('.size-btn').forEach((btn, i) => {
+    btn.classList.toggle('on', i === idx);
+    if (i === idx) btn.style.setProperty('--size-color', color);
+    else btn.style.cssText = '';
   });
 }
 
