@@ -9,30 +9,10 @@
         "label": "Background (Base)",
         "value": "#080808"
       },
-      "bg2": {
-        "type": "color",
-        "label": "Background (Modals)",
-        "value": "#101010"
-      },
-      "bg3": {
-        "type": "color",
-        "label": "Background (Cards)",
-        "value": "#161616"
-      },
-      "bg4": {
-        "type": "color",
-        "label": "Background (Hover)",
-        "value": "#1e1e1e"
-      },
       "border": {
         "type": "color",
         "label": "Border 1",
         "value": "#232323"
-      },
-      "border2": {
-        "type": "color",
-        "label": "Border 2",
-        "value": "#2e2e2e"
       },
       "text": {
         "type": "color",
@@ -48,11 +28,6 @@
         "type": "color",
         "label": "Text (Tertiary)",
         "value": "#555555"
-      },
-      "green": {
-        "type": "color",
-        "label": "Green (Brand)",
-        "value": "#3d7a45"
       },
       "green2": {
         "type": "color",

@@ -62,13 +62,13 @@
     .hdr-right { display: flex; align-items: center; gap: 16px; }
     .back-btn {
       display: none; align-items: center; gap: 8px;
-      background: none; border: 1px solid var(--border2);
+      background: none; border: 1px solid #2e2e2e;
       color: var(--text); font-family: 'Inter', sans-serif;
       font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
       padding: 8px 18px; border-radius: 6px; cursor: pointer;
       transition: background 0.2s, border-color 0.2s;
     }
-    .back-btn:hover { background: var(--bg3); border-color: #444; }
+    .back-btn:hover { background: #161616; border-color: #444; }
     .back-btn.show { display: flex; }
     .back-btn svg { flex-shrink: 0; }
 
@@ -193,7 +193,7 @@
     .filter-wrap { display: flex; gap: 8px; flex-wrap: wrap; }
     .filter-chip {
       padding: 6px 14px; border-radius: 20px;
-      border: 1px solid var(--border2);
+      border: 1px solid #2e2e2e;
       font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
       color: var(--text2); cursor: pointer;
       transition: all 0.18s; background: none;
@@ -204,11 +204,11 @@
 
     .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
     .prod-card {
-      background: var(--bg3); border: 1px solid var(--border);
+      background: #161616; border: 1px solid var(--border);
       border-radius: 12px; overflow: hidden; cursor: pointer;
       transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     }
-    .prod-card:hover { transform: translateY(-4px); border-color: var(--border2); }
+    .prod-card:hover { transform: translateY(-4px); border-color: #2e2e2e; }
     .prod-card.hidden { display: none; }
     .prod-thumb {
       width: 100%; aspect-ratio: 4/3;
@@ -234,18 +234,18 @@
     }
     .modal-backdrop.open { display: flex; }
     .modal {
-      background: var(--bg2); border: 1px solid var(--border2);
+      background: #101010; border: 1px solid #2e2e2e;
       border-radius: 18px; max-width: 700px; width: 100%;
       max-height: 90vh; overflow-y: auto; position: relative;
       animation: mIn 0.22s cubic-bezier(0.2,0,0.1,1);
-      scrollbar-width: thin; scrollbar-color: var(--border2) transparent;
+      scrollbar-width: thin; scrollbar-color: #2e2e2e transparent;
     }
     @keyframes mIn {
       from { opacity: 0; transform: scale(0.94) translateY(12px); }
       to   { opacity: 1; transform: scale(1)    translateY(0); }
     }
     .modal::-webkit-scrollbar { width: 5px; }
-    .modal::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+    .modal::-webkit-scrollbar-thumb { background: #2e2e2e; border-radius: 3px; }
     .modal-close {
       position: absolute; top: 14px; right: 14px; z-index: 10;
       width: 34px; height: 34px; border-radius: 50%;
@@ -270,7 +270,7 @@
     .modal-name { font-family: 'Oswald', sans-serif; font-size: clamp(22px, 4vw, 30px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.05; margin-bottom: 4px; }
     .modal-sub { font-size: 14px; color: var(--text2); margin-bottom: 14px; }
     .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
-    .mtag { font-size: 12px; padding: 5px 12px; border-radius: 16px; border: 1px solid var(--border2); color: var(--text2); font-weight: 500; }
+    .mtag { font-size: 12px; padding: 5px 12px; border-radius: 16px; border: 1px solid #2e2e2e; color: var(--text2); font-weight: 500; }
 
     /* ── Accent divider ── */
     .modal-accent { height: 3px; width: 100%; }
@@ -282,7 +282,7 @@
     }
     .size-btn {
       padding: 6px 16px; border-radius: 20px; cursor: pointer;
-      border: 1px solid var(--border2);
+      border: 1px solid #2e2e2e;
       font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
       color: var(--text2); background: none;
       font-family: 'Inter', sans-serif;
@@ -334,7 +334,7 @@
     /* ─── Scrollbar global ─── */
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: #2e2e2e; border-radius: 3px; }
 
     @media (max-width: 600px) {
       .hdr { padding: 0 20px; }
@@ -468,15 +468,10 @@ async function init() {
 
   const s = appData.sections.app_settings;
   document.documentElement.style.setProperty('--bg',      s.bg.value);
-  document.documentElement.style.setProperty('--bg2',     s.bg2.value);
-  document.documentElement.style.setProperty('--bg3',     s.bg3.value);
-  document.documentElement.style.setProperty('--bg4',     s.bg4.value);
   document.documentElement.style.setProperty('--border',  s.border.value);
-  document.documentElement.style.setProperty('--border2', s.border2.value);
   document.documentElement.style.setProperty('--text',    s.text.value);
   document.documentElement.style.setProperty('--text2',   s.text2.value);
   document.documentElement.style.setProperty('--text3',   s.text3.value);
-  document.documentElement.style.setProperty('--green',   s.green.value);
   document.documentElement.style.setProperty('--green2',  s.green2.value);
 
   const sf = appData.sections.storefront;
@@ -657,8 +652,8 @@ function renderProducts(products) {
     });
 
     const imgStyle = p.image
-      ? `background:url('${p.image}') center/contain no-repeat; background-color:var(--bg4)`
-      : `background-color:var(--bg4)`;
+      ? `background:url('${p.image}') center/contain no-repeat; background-color:#1e1e1e`
+      : `background-color:#1e1e1e`;
 
     return `
     <div class="prod-card" data-id="${p.id}" data-filtervals="${filterStr}"
@@ -799,9 +794,9 @@ function setModalMainImg(src) {
   const wrap = document.getElementById('modalMainImg');
   wrap.style.position = 'relative';
   if (src) {
-    wrap.innerHTML = `<div style="position:absolute;inset:0;background:url('${src}') center/contain no-repeat;background-color:var(--bg4)"></div>`;
+    wrap.innerHTML = `<div style="position:absolute;inset:0;background:url('${src}') center/contain no-repeat;background-color:#1e1e1e"></div>`;
   } else {
-    wrap.innerHTML = `<div style="position:absolute;inset:0;background-color:var(--bg4)"></div>`;
+    wrap.innerHTML = `<div style="position:absolute;inset:0;background-color:#1e1e1e"></div>`;
   }
 }
 
