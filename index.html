@@ -455,6 +455,7 @@ let activeBrand = null;
 let activeFilter = 'All';
 let modalProduct = null;
 let modalBrand = null;
+let modalProductIdx = -1;
 let activeSizeIdx = 0;
 let allImgs = [];
 let activeImgIdx = 0;
@@ -685,9 +686,10 @@ function openProduct(id) {
   const pIdx = appData.sections.products.value.indexOf(p);
   const bIdx = appData.sections.brands.value.indexOf(b);
 
-  modalProduct  = p;
-  modalBrand    = b;
-  activeSizeIdx = 0;
+  modalProduct    = p;
+  modalBrand      = b;
+  modalProductIdx = pIdx;
+  activeSizeIdx   = 0;
 
   // ── Accent bar ──
   const bar = document.getElementById('modalAccent');
@@ -742,24 +744,32 @@ function openProduct(id) {
   const sizes   = p.sizes || [];
   const secImgs = p.secondary_images || [];
 
-  buildModalImages(p, b, sizes, secImgs);
+  buildModalImages(p, b, sizes, secImgs, pIdx);
 
   document.getElementById('modal').scrollTop = 0;
   document.getElementById('modalBackdrop').classList.add('open');
 }
 
-function buildModalImages(p, b, sizes, secImgs) {
+function buildModalImages(p, b, sizes, secImgs, pIdx) {
   const color = b.color;
 
-  // Build combined image deck: [selected size image, ...secondary images]
+  // Build combined image deck with bind paths for each entry
   const baseImg = sizes.length > 0 ? sizes[0].image : (p.image || '');
   allImgs = [];
-  if (baseImg) allImgs.push({ src: baseImg, type: 'size', sizeIdx: 0 });
-  secImgs.forEach(img => { if (img.image) allImgs.push({ src: img.image, type: 'secondary' }); });
+  if (baseImg) allImgs.push({
+    src: baseImg, type: 'size', sizeIdx: 0,
+    path: sizes.length > 0 ? `products.${pIdx}.sizes.0.image` : `products.${pIdx}.image`
+  });
+  secImgs.forEach((img, secIdx) => {
+    if (img.image) allImgs.push({
+      src: img.image, type: 'secondary', secIdx,
+      path: `products.${pIdx}.secondary_images.${secIdx}.image`
+    });
+  });
   activeImgIdx = 0;
   activeSizeIdx = 0;
 
-  setModalMainImg(allImgs[0]?.src || '');
+  setModalMainImg(allImgs[0]?.src || '', allImgs[0]?.path || null);
   updateImgNav();
 
   // ── Size selector ──
@@ -769,17 +779,18 @@ function buildModalImages(p, b, sizes, secImgs) {
       <button class="size-btn ${i === 0 ? 'on' : ''}"
               style="${i === 0 ? `--size-color:${color}` : ''}"
               data-idx="${i}"
+              data-bind-text="products.${pIdx}.sizes.${i}.size_label"
               onclick="selectSize(${i})">
         ${sz.size_label}
       </button>
     `).join('');
     sel.style.display = 'flex';
   } else if (p.size) {
-    // If there is no sizes array but there is a size field, show it as a selected size toggle
     sel.innerHTML = `
       <button class="size-btn on"
               style="--size-color:${color}"
-              data-idx="0">
+              data-idx="0"
+              data-bind-text="products.${pIdx}.size">
         ${p.size}
       </button>
     `;
@@ -790,13 +801,22 @@ function buildModalImages(p, b, sizes, secImgs) {
   }
 }
 
-function setModalMainImg(src) {
+function setModalMainImg(src, bindPath) {
   const wrap = document.getElementById('modalMainImg');
   wrap.style.position = 'relative';
-  if (src) {
-    wrap.innerHTML = `<div style="position:absolute;inset:0;background:url('${src}') center/contain no-repeat;background-color:#1e1e1e"></div>`;
+  // Reuse a persistent inner div so data-bind-bg-image survives between image switches
+  let inner = wrap.querySelector('.modal-img-bg');
+  if (!inner) {
+    inner = document.createElement('div');
+    inner.className = 'modal-img-bg';
+    inner.style.cssText = 'position:absolute;inset:0;background-color:#1e1e1e;background-position:center;background-size:contain;background-repeat:no-repeat;';
+    wrap.appendChild(inner);
+  }
+  inner.style.backgroundImage = src ? `url('${src}')` : '';
+  if (bindPath) {
+    inner.setAttribute('data-bind-bg-image', bindPath);
   } else {
-    wrap.innerHTML = `<div style="position:absolute;inset:0;background-color:#1e1e1e"></div>`;
+    inner.removeAttribute('data-bind-bg-image');
   }
 }
 
@@ -821,7 +841,7 @@ function navImg(dir) {
   const total = allImgs.length;
   if (total <= 1) return;
   activeImgIdx = (activeImgIdx + dir + total) % total;
-  setModalMainImg(allImgs[activeImgIdx]?.src || '');
+  setModalMainImg(allImgs[activeImgIdx]?.src || '', allImgs[activeImgIdx]?.path || null);
   updateImgNav();
 
   // Sync size buttons: highlight if current image is a size image
@@ -845,13 +865,22 @@ function selectSize(idx) {
   activeSizeIdx = idx;
 
   // Rebuild gallery with this size's image as entry 0
+  const pIdx = modalProductIdx;
   const baseImg = sizes[idx]?.image || p.image || '';
   allImgs = [];
-  if (baseImg) allImgs.push({ src: baseImg, type: 'size', sizeIdx: idx });
-  secImgs.forEach(img => { if (img.image) allImgs.push({ src: img.image, type: 'secondary' }); });
+  if (baseImg) allImgs.push({
+    src: baseImg, type: 'size', sizeIdx: idx,
+    path: sizes.length > 0 ? `products.${pIdx}.sizes.${idx}.image` : `products.${pIdx}.image`
+  });
+  secImgs.forEach((img, secIdx) => {
+    if (img.image) allImgs.push({
+      src: img.image, type: 'secondary', secIdx,
+      path: `products.${pIdx}.secondary_images.${secIdx}.image`
+    });
+  });
   activeImgIdx = 0;
 
-  setModalMainImg(allImgs[0]?.src || '');
+  setModalMainImg(allImgs[0]?.src || '', allImgs[0]?.path || null);
   updateImgNav();
 
   document.querySelectorAll('.size-btn').forEach((btn, i) => {
