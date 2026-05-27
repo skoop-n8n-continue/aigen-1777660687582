@@ -280,7 +280,6 @@
       display: flex; gap: 8px; flex-wrap: wrap;
       padding: 14px 16px 0;
     }
-    .size-selector:empty { display: none; }
     .size-btn {
       padding: 6px 16px; border-radius: 20px; cursor: pointer;
       border: 1px solid var(--border2);
@@ -779,8 +778,10 @@ function buildModalImages(p, b, sizes, secImgs) {
         ${sz.size_label}
       </button>
     `).join('');
+    sel.style.display = 'flex';
   } else {
     sel.innerHTML = '';
+    sel.style.display = 'none';
   }
 }
 
